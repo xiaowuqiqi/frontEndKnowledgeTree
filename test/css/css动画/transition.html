@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .article2 div, .article3 div {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+    }
+
+    /*基础使用*/
+    .article2 div {
+      transition-property: background-color;
+      transition-duration: 3s;
+      /* 延迟多长时间渲染，如果是负数，则在1s后再渲染，这个时候动画已经暗中走了1s了 */
+      transition-delay: -1s;
+      /*transition: font-size 3s, color 2s;*/
+      /*还可以设置 left、margin-left、height 和 color*/
+
+      /*transition-property transition-duration
+        transition-timing-function transition-delay
+      */
+    }
+
+    .article2:hover div {
+      background-color: #0d47a1;
+    }
+
+    /*transition 参数分别为*/
+    /*transition:property duration timing-function delay*/
+
+
+    /*transform*/
+    .article3 div {
+      transition-property: transform;
+      transition-duration: 3s;
+    }
+
+    .article3 div:hover {
+      /*这里的90%相对于自己（div）宽度定位，移动x轴上的距离*/
+      transform: translate(90%);
+    }
+
+    /*js触发*/
+    .animate {
+      transform: translate(-90%);
+      transition-property: transform;
+      transition-duration: 9s;
+    }
+
+    /*stripe.classList.add('animate');*/
+
+    /*timing-function*/
+    /*两种值：一个贝塞尔曲线（Bezier curve）或者阶跃函数（steps）*/
+    .article3 div {
+      /*cubic-bezier(x2,y2,x3,y3)参数中的值是2点和3点的坐标*/
+      /*直线*/
+      transition-timing-function: cubic-bezier(0, 0, 1, 1);
+      /*减速*/
+      transition-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+      /*cubic-bezier(0.25, 0.1, 0.25, 1.0)小的先加速后减速*/
+      transition-timing-function: ease;
+      /*cubic-bezier(0.42,0,1.0,1.0)小的加速效果*/
+      transition-timing-function: ease-in;
+      /*cubic-bezier(0,0,0.58,1.0)小的减速效果*/
+      transition-timing-function: ease-out;
+      /*cubic-bezier(0.42,0,0.58,1.0)先加速后减速*/
+      transition-timing-function: ease-in-out;
+    }
+
+    .article3 div {
+      /*贝塞尔曲线可以使动画『超出』其原本的范围。*/
+      /*动画会变为*/
+      transition-timing-function: cubic-bezier(.5, -1, .5, 2);
+    }
+
+    .article3 div {
+      /*跳跃函数 step*/
+      transition-duration: 3s;
+      transition-timing-function: steps(2, start);
+    }
+  </style>
+</head>
+<body>
+<article class="article2">
+  <div>
+
+  </div>
+</article>
+<article class="article3">
+  <div>
+
+  </div>
+</article>
+</body>
+</html>

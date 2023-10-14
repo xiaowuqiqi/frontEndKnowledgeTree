@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <!-- 标题挤压悬浮 -->
+  <style>
+    .viewport {
+      height: 500px;
+      overflow: hidden;
+    }
+
+    .content {
+      overflow: scroll;
+      height: 100%;
+    }
+
+    .content .group header {
+      position: sticky;
+      top: 0;
+      background-color: wheat;
+    }
+  </style>
+  <!-- 标题全部悬浮 -->
+  <style>
+    .viewport2 {
+      height: 500px;
+      overflow: hidden;
+    }
+
+    .content2 {
+      overflow: scroll;
+      height: 100%;
+    }
+
+    .content2 header {
+      position: sticky;
+      top: 0;
+    }
+    .content2 header:nth-of-type(1) {
+      background-color:white;
+    }
+    .content2 header:nth-of-type(2) {
+      padding-left: 50px;
+    }
+    .content2 header:nth-of-type(3) {
+      padding-left: 100px;
+    }
+    .content2 header:nth-of-type(4) {
+      padding-left: 150px;
+    }
+    .content2 header:nth-of-type(5) {
+      padding-left: 200px;
+    }
+  </style>
+</head>
+<body>
+<div class="viewport">
+  <div class="content">
+    <div class="group">
+      <!-- 注意 group 元素，包裹后，虽然没有任何样式添加，但可以实现 标题 滚动挤压的效果 -->
+      <header>
+        题目1
+      </header>
+      <article>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+      </article>
+    </div>
+    <div class="group">
+      <header>
+        题目2
+      </header>
+      <article>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+      </article>
+    </div>
+    <div class="group">
+      <header>
+        题目3
+      </header>
+      <article>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+      </article>
+    </div>
+    <div class="group">
+      <header>
+        题目4
+      </header>
+      <article>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+      </article>
+    </div>
+    <div class="group">
+      <header>
+        题目5
+      </header>
+      <article>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+        <div>list item</div>
+      </article>
+    </div>
+  </div>
+</div>
+<div class="viewport2">
+  <div class="content2">
+    <header>
+      题目1
+    </header>
+    <article>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+    </article>
+    <header>
+      题目2
+    </header>
+    <article>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+    </article>
+    <header>
+      题目3
+    </header>
+    <article>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+    </article>
+    <header>
+      题目4
+    </header>
+    <article>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+    </article>
+    <header>
+      题目5
+    </header>
+    <article>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+      <div>list item</div>
+    </article>
+  </div>
+</div>
+</body>
+</html>

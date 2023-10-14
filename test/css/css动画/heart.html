@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    @keyframes scale2 {
+      from {
+        transform: scale(0.4);
+      }
+      to {
+        transform: scale(0.5);
+      }
+    }
+    .heart {
+      transform-origin: 50% 50%;
+      transform: scale(0.8);
+      position: relative;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      animation: scale2 0.5s ease-in infinite;
+    }
+    .heart div {
+      background-color: red;
+    }
+    .heart .round {
+      z-index: 6;
+      width: 50%;
+      height: 50%;
+      border-radius: 50%;
+    }
+    .heart .mask {
+      width: 100%;
+      height: 20%;
+      background-color: white;
+      position: absolute;
+      z-index: 5;
+    }
+    .heart div:last-child {
+      position: absolute;
+      transform-origin: 50% 50%;
+      transform: rotate(45deg);
+      left: 20%;
+      top: 13%;
+      width: 60%;
+      height: 60%;
+    }
+  </style>
+</head>
+<body>
+<div class="heart">
+  <div class="round"></div>
+  <div class="round"></div>
+  <div class="mask"></div>
+  <div></div>
+</div>
+</body>
+</html>
