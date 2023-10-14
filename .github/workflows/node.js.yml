@@ -28,5 +28,11 @@ jobs:
          cache: 'npm'
     - name: Install dependencies
       run: npm install
-    - name: Start the app
-      run: npm start
+    - name: Build the app
+      run: npm run build
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.5
+      with:
+        personal_token: ${{ secrets.PERSONAL_TOKEN }}
+        branch: gh-pages
+        folder: dist
