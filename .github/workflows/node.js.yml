@@ -26,7 +26,7 @@ jobs:
       with:
          node-version: ${{ matrix.node-version }}
          cache: 'npm'
-    - run: cd ../
-    - run: npm install
-    - run: npm start
-    - working-directory: /home/runner/work/frontEndKnowledgeTree/package.json
+    - name: Install dependencies
+      run: npm install
+    - name: Start the app
+      run: npm start
