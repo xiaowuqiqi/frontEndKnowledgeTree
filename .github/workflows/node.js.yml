@@ -28,5 +28,5 @@ jobs:
          cache: 'npm'
     - name: Install dependencies
       run: npm install
-    - name: Start the app
-      run: npm start
+    - name: Build the app
+      run: npm build
