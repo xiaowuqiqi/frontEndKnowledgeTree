@@ -84,15 +84,15 @@ optimization: {
 
 默认图片大小
 
-![image-20231107211950224](D:/gitHub/xvexi/frontEndKnowledgeTree/docs/webpack/webpack-loader.assets/image-20231107211950224.png)
+![image-20231107211950224](./webpack-loader.assets/image-20231107211950224.png)
 
 打包后图片大小
 
-![image-20231106225122613](D:/gitHub/xvexi/frontEndKnowledgeTree/docs/webpack/webpack-loader.assets/image-20231106225122613.png)
+![image-20231106225122613](./webpack-loader.assets/image-20231106225122613.png)
 
 由 imagemin-jpegtran 换为 imagemin-mozjpeg 后，由无损压缩变为有损压缩。jpg进一步减小。
 
-![image-20231106225027314](D:/gitHub/xvexi/frontEndKnowledgeTree/docs/webpack/webpack-loader.assets/image-20231106225027314.png)
+![image-20231106225027314](./webpack-loader.assets/image-20231106225027314.png)
 
 ### 策略
 
