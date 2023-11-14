@@ -5,7 +5,7 @@ hero:
   description: 前端知识树的学习与整理
   actions:
     - text: 最新进度
-      link: /js/1_scope_and_closure
+      link: /sql/base
 features:
   - title: Hello
     emoji: 💎
