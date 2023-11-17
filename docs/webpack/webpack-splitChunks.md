@@ -200,7 +200,11 @@ F(cacheGroups, "defaultVendors", () => ({
 }));
 ```
 
+#### **enforce**
 
+设置为true，告诉 webpack 忽略 [`splitChunks.minSize`](https://webpack.docschina.org/plugins/split-chunks-plugin/#splitchunksminsize)、[`splitChunks.minChunks`](https://webpack.docschina.org/plugins/split-chunks-plugin/#splitchunksminchunks)、[`splitChunks.maxAsyncRequests`](https://webpack.docschina.org/plugins/split-chunks-plugin/#splitchunksmaxasyncrequests) 和 [`splitChunks.maxInitialRequests`](https://webpack.docschina.org/plugins/split-chunks-plugin/#splitchunksmaxinitialrequests) 选项，并始终为此缓存组创建 chunk。
+
+> enforce 为 true，禁用外部的属性，采用 cacheGroups 内部设置的属性。
 
 ## prduction
 

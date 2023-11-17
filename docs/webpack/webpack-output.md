@@ -61,6 +61,9 @@ output.chunkFormat = 'array-push '
 > 当设置 array-push 后
 >
 > ![image-20231031001947409](./webpack-output.assets/image-20231031001947409.png)
+>
+> - 当设置 `output.chunkFormat` 为 `module` 时，Webpack 会使用 ES 模块格式。在这种格式下，所有模块可能会被合并成一个文件，特别是当你的项目比较小或者配置得当时。ES 模块格式更适合现代浏览器，并且通常会有更好的模块化和树摇（tree-shaking）效果。
+> - 当设置 `output.chunkFormat` 为 `array-push` 时，Webpack 会使用一个较为传统的格式，每个模块都会被封装在一个数组推送（array-push）的结构中。这种格式通常会导致生成多个文件，因为它不那么侧重于模块合并。这种方式可能更适合需要细粒度控制的场景，或者在支持较旧的浏览器环境下工作时。
 
 ```js
 // 该选项的默认值取决 target 和 output.module 的设置。

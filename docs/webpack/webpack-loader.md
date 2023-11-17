@@ -1305,7 +1305,9 @@ postcssShort({ prefix: 'x' });
 ```js
 javascriptCopy codemodule.exports = {
   plugins: [
-    require('postcss-normalize'),
+    require('postcss-normalize')({
+        forceImport:true // 强制在 CSS 顶部导入 normalize.css，即使它没有通过 @import-normalize; 声明引入。
+    }),
     // ...其他 PostCSS 插件
   ]
 }
