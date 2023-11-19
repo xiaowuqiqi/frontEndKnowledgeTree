@@ -8,6 +8,10 @@ order: 1
 ---
 # optimization
 
+配置 optimization 选项，其用于打包时代码优化与缩小
+
+optimization 选项根据webpack 的 config/defaults.js文件标注的，关于生产/开发环境的默认分类整理。
+
 ## **共有的配置项**
 
 设置 production 和 development 配置项时都会设置的属性。
