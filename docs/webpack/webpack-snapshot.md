@@ -113,9 +113,9 @@ object = {hash boolean = true, timestamp boolean = true}
 - `hash`：比较内容哈希以判断无效。（比 `timestamp` 更昂贵，但更改的频率较低）。
 - `timestamp`：比较时间戳以确定无效。
 
-# Q&A
+## Q&A
 
-## docuker中构建前端项目，如何让webpack的snapshot选项生效
+### docuker中构建前端项目，如何让webpack的snapshot选项生效
 
 在Docker容器环境中使用Webpack的`snapshot`功能可能会遇到一些特殊的问题，尤其是与文件系统相关的问题。以下是一些建议和步骤，帮助你确保Webpack的`snapshot`选项在Docker中正常工作：
 
@@ -166,7 +166,7 @@ object = {hash boolean = true, timestamp boolean = true}
    COPY . .
    ```
 
-## managedPaths  和 immutablePaths区别是什么，他们不都是判断文件是否修改吗
+### managedPaths  和 immutablePaths区别是什么，他们不都是判断文件是否修改吗
 
 是的，`managedPaths` 和 `immutablePaths` 都是 Webpack 的配置选项，它们都关系到决定文件或模块是否在连续构建中发生了变化。但它们的侧重点和使用场景是有所不同的。以下是它们之间的主要区别：
 
