@@ -1,12 +1,12 @@
 ---
-title: module 配置规则
+title: module
 nav: webpack
 group:
   title: loader
   order: 3
 order: 2
 ---
-# Module
+# Module 配置规则
 
 ## module.generator
 
