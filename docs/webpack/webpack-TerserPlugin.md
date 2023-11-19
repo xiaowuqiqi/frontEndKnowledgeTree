@@ -1,5 +1,5 @@
 ---
-title: TerserPlugin插件
+title: TerserPlugin
 nav: webpack
 group:
   title: optimization

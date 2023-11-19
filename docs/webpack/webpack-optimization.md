@@ -1,12 +1,12 @@
 ---
-title: optimization 优化选项
+title: optimization
 nav: webpack
 group:
   title: optimization
   order: 1
 order: 1
 ---
-# optimization
+# optimization 优化选项
 
 配置 optimization 选项，其用于打包时代码优化与缩小
 

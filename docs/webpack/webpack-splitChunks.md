@@ -1,12 +1,12 @@
 ---
-title: splitChunks chunks分割
+title: splitChunks
 nav: webpack
 group:
   title: optimization
   order: 1
 order: 2
 ---
-# splitChunks
+# splitChunks chunks分割
 
 最初，chunks（以及内部导入的模块）是通过内部 **webpack 图谱**中的**父子关系关联**的。`CommonsChunkPlugin` 曾被用来避免他们之间的**重复依赖**，但是不再做进一步的优化。
 

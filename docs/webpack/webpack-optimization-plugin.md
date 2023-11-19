@@ -1,5 +1,5 @@
 ---
-title: 其他 minimizer plugin
+title: other plugin
 nav: webpack
 group:
   title: optimization
