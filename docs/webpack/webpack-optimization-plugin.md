@@ -40,45 +40,60 @@ npm install imagemin-gifsicle imagemin-mozjpeg imagemin-pngquant imagemin-svgo -
 **无损优化常用案例**
 
 ```js
-optimization: {
-  minimize: true,
-  minimizer: [
-    …… // 注意，设置 TerserPlugin 等其他插件，放于 ImageMinimizerPlugin 前边位置。
-    new ImageMinimizerPlugin({
-      minimizer:{
-        implementation: ImageMinimizerPlugin.imageminMinify,
-        options: {
-		  //带有自定义选项的无损优化
-		  //您可以随意尝试各种选项，以获得更好的结果
-          plugins: [
-            ["gifsicle", { interlaced: true }],
-            // ["jpegtran", { progressive: true }],
-            ["mozjpeg", { progressive: true, quality: 65 }],
-            ["optipng", { optimizationLevel: 5 }],
-            // Svgo configuration here https://github.com/svg/svgo#configuration
-            [
-              "svgo",
-              {
-                plugins: extendDefaultPlugins([
-                  {
-                    name: "removeViewBox",
-                    active: false,
-                  },
-                  {
-                    name: "addAttributesToSVGElement",
-                    params: {
-                      attributes: [{ xmlns: "http://www.w3.org/2000/svg" }],
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        type: "asset",
+      },
+    ],
+  },
+  optimization: {
+    minimizer: [
+      "...",
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminMinify,
+          options: {
+            // Lossless optimization with custom option
+            // Feel free to experiment with options for better result for you
+            plugins: [
+              ["gifsicle", { interlaced: true }],
+              ["jpegtran", { progressive: true }],
+              ["optipng", { optimizationLevel: 5 }],
+              // Svgo configuration here https://github.com/svg/svgo#configuration
+              [
+                "svgo",
+                {
+                  plugins: [
+                    {
+                      name: "preset-default",
+                      params: {
+                        overrides: {
+                          removeViewBox: false,
+                          addAttributesToSVGElement: {
+                            params: {
+                              attributes: [
+                                { xmlns: "http://www.w3.org/2000/svg" },
+                              ],
+                            },
+                          },
+                        },
+                      },
                     },
-                  },
-                ]),
-              },
+                  ],
+                },
+              ],
             ],
-          ],
+          },
         },
-      }
-    })
-  ],
-},
+      }),
+    ],
+  },
+};
 ```
 
 **打包结果**

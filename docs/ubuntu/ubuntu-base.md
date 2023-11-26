@@ -555,6 +555,46 @@ shutdown -h now # 关机
 reboot # 重启
 ```
 
+## 设置静态网络
+
+教程参考1：https://zhuanlan.zhihu.com/p/653835602
+
+教程参考2：https://linuxcpp.0voice.com/?id=131431
+
+首先修改network配置
+
+```bash
+cd /etc/netplan
+cp 00-installer-config.yaml 00-installer-config.yaml.bak
+vim 00-installer-config.yaml
+```
+
+将 `dhcp4: true` 修改为 `dhcp4: no` 以禁用DHCP，并添加一个新的静态IP地址配置。例如，假设您想将IP地址设置为 `192.168.1.130` ，子网掩码为 `255.255.255.0` ，网关为 `192.168.1.1` ，DNS服务器为 `8.8.8.8` 和 `8.8.4.4`，则配置块应如下所示：
+
+```js
+network:
+ ethernets:
+   enp0s3:
+     dhcp4: no
+     addresses: [192.168.88.130/24]
+     gateway4: 192.168.88.2
+     nameservers:
+       addresses: [8.8.8.8, 8.8.4.4]
+ version: 2
+```
+
+重新刷新ip
+
+```bash
+sudo netplan apply
+```
+
+刷新 ssh 服务
+
+```bash
+service sshd restart
+```
+
 ## shell 常见指令
 
 ### if 判断

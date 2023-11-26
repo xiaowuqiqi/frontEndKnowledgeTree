@@ -23,7 +23,7 @@ node_modules
 .umi-production
 .umi-test
 .env.local
-
+/test
 # ide
 /.vscode
 /.idea
