@@ -19,7 +19,8 @@
       width: 200px;
       height: 200px;
       display: flex;
-      animation: scale2 0.5s ease-in infinite;
+      animation: scale2 0.5s cubic-bezier(.33,.18,.99,.59) infinite;
+      animation-direction: alternate-reverse;
     }
     .heart div {
       background-color: red;
