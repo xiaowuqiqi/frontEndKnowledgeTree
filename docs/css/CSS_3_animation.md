@@ -177,8 +177,6 @@ both：
 
 # transform
 
-详情参考：https://www.w3cschool.cn/lugfe/lugfe-s8ec25yu.html
-
 ## scale 缩放 *
 
 ```css
@@ -601,3 +599,9 @@ $(element)
 element.addEventListener("webkitTransitionEnd",fn())  // Chrome, Safari 和 Opera
 element.addEventListener("mozTransitionEnd",fn())  //标准写法
 ```
+
+**备注**
+
+1 详情参考：https://www.w3cschool.cn/lugfe/lugfe-i2yt25yr.html
+
+2 详情参考：https://www.w3cschool.cn/lugfe/lugfe-s8ec25yu.html
