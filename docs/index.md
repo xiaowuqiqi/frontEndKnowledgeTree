@@ -1,7 +1,7 @@
 ---
 title: FEKT - front-end-knowledge-tree
 hero:
-  title: FEKT
+  title: 每日背诵
   description: 前端知识树的学习与整理
   actions:
     - text: 最新进度
@@ -9,13 +9,13 @@ hero:
 features:
   - title: Hello
     emoji: 💎
-    description: Put hello description here
+    description: 每日需要背诵的知识
   - title: World
     emoji: 🌈
-    description: Put world description here
+    description: 已经包含 CSS JS VUE框架 webpack MySQL数据库 Ubuntu
   - title: '!'
     emoji: 🚀
-    description: Put ! description here
+    description: 坚持锻炼身体也是必须的
 ---
 
 frontEndKnowledgeTree
