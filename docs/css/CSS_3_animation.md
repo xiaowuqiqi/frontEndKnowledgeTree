@@ -285,7 +285,7 @@ transform: rotate3d(1,0,0,50deg);  //绕着X轴顺时针旋转50度
 
 
 
-### **transform-origin ***
+### transform-origin
 
 指定元素的中心点
 
