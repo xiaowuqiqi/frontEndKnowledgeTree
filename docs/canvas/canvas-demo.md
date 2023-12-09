@@ -29,4 +29,10 @@ export default () => {
 }
 ```
 
+github: https://github.com/xiaowuqiqi/cubic-bezier-view-chinese
+
+demo: https://xiaowuqiqi.github.io/canvas-pellet-collision
+
 ## 代码详细实现
+
+https://xiaowuqiqi.github.io/canvas-pellet-collision/index
