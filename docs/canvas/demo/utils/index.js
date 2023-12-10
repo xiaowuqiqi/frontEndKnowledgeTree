@@ -19,7 +19,7 @@ export function cubicBezierPointAtX(x, P0, P1, P2, P3) {
   if(Number.isNaN(x))return;
   if(x<P0.x||x>P3.x)return;
   // P0 到 p3 分别是起始点、两个控制点和终点的坐标。
-// 迭代法求解 t 值
+  // 迭代法求解 t 值
   let t = 0.5;  // 初始猜测值
   const epsilon = 1e-6;  // 精度要求
   let xGuess
