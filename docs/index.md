@@ -5,7 +5,7 @@ hero:
   description: 前端知识树的学习与整理
   actions:
     - text: 最新进度
-      link: /canvas/canvas-demo
+      link: /js/web-api_base
 features:
   - title: Hello
     emoji: 💎
