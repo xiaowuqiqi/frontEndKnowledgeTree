@@ -1,9 +1,7 @@
 ---
-title: Web_API 它的分金定穴术
-order: 1
-nav:
-  order: 3
-  title: WebApi
+title: Web_API它的分金定穴术
+order: 5
+group: webAPI
 ---
 # Web_API 它的分金定穴术
 > 简介: 这里的"分金定穴"一词, 出自"鬼吹灯". 通过一定法门来判断墓穴的位置, 这里的"金"指的是罗盘, 在风水学中通常可以判断阳宅吉凶, 简单来说, 要想窥探宝藏, 必然要遵循他们的规律, 顺势而行.
