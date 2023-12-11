@@ -1,7 +1,9 @@
 ---
 title: SQL补充
 order: 3
-
+group:
+  title: MySQL数据库
+  order: 2
 ---
 # SQL补充
 

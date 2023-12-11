@@ -1,7 +1,9 @@
 ---
 title: SQL数据操作
 order: 2
-
+group:
+  title: MySQL数据库
+  order: 2
 ---
 # SQL数据操作
 

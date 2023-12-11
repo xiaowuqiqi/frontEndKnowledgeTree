@@ -1,9 +1,9 @@
 ---
 title: SQL基础
 order: 1
-nav: 
-  order: 6
+group:
   title: MySQL数据库
+  order: 2
 ---
 # SQL基础
 
