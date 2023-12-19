@@ -114,3 +114,43 @@ linear-gradient(0deg, blue, green 40%, red);
 ```
 
 ![image-20230922214612028](./CSS_3_border_image.assets/image-20230922214612028.png)
+
+## 蒙版裁剪
+
+**对内容进行裁剪**
+
+**background-clip** 属性有三个属性值：background-clip:**border-box**(默认)、**padding-box**、**content-box**;
+
+使用这三个值就可以截取border、padding、content以内的区域，对其进行我们所需要的操作。
+
+![image-20231215085217384](./CSS_3_border_image.assets/image-20231215085217384.png)
+
+```html
+<style>
+.box {
+    border: 20px dashed black;
+    background-color: green;
+　　 padding：20px；
+    background-clip: border-box/padding-box/content-box;
+}
+</style>
+<body>
+    <div  class="box">
+    </div>
+</body>
+```
+
+**对文字进行裁剪**
+
+运用了 **background-clip: text** 的元素，其背景内容只保留文字所在区域部分，配合透明文字 color: transparent ，就能够利用文字透出背景。
+
+![image-20231215085530609](./CSS_3_border_image.assets/image-20231215085530609.png)
+
+```css
+p{
+	color: transparent;
+	background: url(https://media.giphy.com/media/Ju7l5y9osyymQ/giphy.gif) center/cover;
+	background-clip: text;
+}
+```
+
