@@ -2,9 +2,9 @@
 title: output
 nav: webpack
 group:
-  title: 其他属性
-  order: 2
-order: 1
+  title: 基础
+  order: 0
+order: 2
 ---
 # output
 

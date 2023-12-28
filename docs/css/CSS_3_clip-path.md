@@ -138,7 +138,7 @@ clip-path: ellipse(closest-side farthest-side);
 
 **设置的值**分别是距离左上角的距离（或者说**坐标**）。
 
-值可以设置**百分比**，分别是对应div宽高的半分比。
+值可以设置**百分比**，分别是对应div宽高的百分比。
 
 ```css
 clip-path: polygon(50% 0%,
