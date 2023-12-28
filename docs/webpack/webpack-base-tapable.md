@@ -640,3 +640,11 @@ export const AsyncSeriesHook_MY_test1 = () => {
 - 从使用层面上讲：
   - 观察者模式，多用于单个应用内部
   - 发布订阅模式，则更多的是一种跨应用的模式(cross-application pattern)，比如我们常用的消息中间件kafka
+
+
+
+**参考**
+
+https://zhuanlan.zhihu.com/p/615062842?utm_id=0
+
+https://juejin.cn/post/6844903588112629767
