@@ -42,6 +42,12 @@ order: 1
 
 **AsyncParallelBailHook** 有返回值，就熔断当前事件流。但与 SyncBailHook 不同，他不会直接熔断下个tap的执行（因为异步函数第一时间都已经执行了，除非异步串行），而是在熔断时（tap有返回值）直接执行完 call（或者说promise或callAsync函数）。
 
+Hook 基类 API：
+
+![image-20231228124046803](./webpack-base-tapable.assets/image-20231228124046803.png)
+
+github地址：https://github.com/webpack/tapable
+
 ## 测试
 
 简单测试各个函数用法
