@@ -36,7 +36,7 @@ order: 1
 
 **注意**
 
-**SyncWaterfallHook **传递返回值到第一个参数。tap 的 return 值，会到下一个 tap 的第一个参数中，tap 第二个参数到最后一个参数永远接收的是call传入的参数。
+**SyncWaterfallHook** 传递返回值到第一个参数。tap 的 return 值，会到下一个 tap 的第一个参数中，tap 第二个参数到最后一个参数永远接收的是call传入的参数。
 
 **SyncLoopHook** 循环一个 tap 函数。直到一个 tap 函数返回 undefined，才会循环下个 tap 函数。
 
