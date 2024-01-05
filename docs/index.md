@@ -5,7 +5,7 @@ hero:
   description: 前端知识树的学习与整理
   actions:
     - text: 最新进度
-      link: /js/web-api_base
+      link: /webpack/webpack-base-enhanced-resolve
 features:
   - title: Hello
     emoji: 💎

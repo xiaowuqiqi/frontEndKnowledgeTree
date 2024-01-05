@@ -59,7 +59,7 @@ module.exports = {
 >
 > 也可以使用 HtmlWebpackPlugin 的 templateParameters 属性
 >
-> ```jsx
+> ```html
 > new HtmlWebpackPlugin({
 >    // 如果传递一个普通对象，它将与默认值合并
 >    // 第4版新增功能
