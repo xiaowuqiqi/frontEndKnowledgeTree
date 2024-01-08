@@ -144,6 +144,116 @@ for(var i in b){
 var a_names = Object.getOwnPropertyNames({a:1});
 ```
 
+## defineProperty
+
+在一个对象上创建（编辑）一个属性，同时**设置**这个**属性的描述对象**。
+
+`Object.defineProperty(对象,“属性名”,描述对象);`
+
+描述对象中的属性及其各自的作用：
+
+| 属性名       | 作用                                           |
+| ------------ | ---------------------------------------------- |
+| configurable | 是否可以删除该属性或者修改该属性的定义描述对象 |
+| enumerable   | 该属性是否可枚举                               |
+| writable     | 该属性是否可修改                               |
+| get          | 获取该属性值时调用该函数                       |
+| set          | 设置该属性值时调用该函数                       |
+| value        | 该属性的值或者方法                             |
+
+注意的是 **configurable，enumerable，writable** 都是默认为true。
+
+同时注意 **value** 和 **wriable** 属性与 **get** 和 **set** 属性是冲突的，不要同时出现。
+
+例如：
+
+```js
+Object.defineProperty(o, "b", {
+  configurable: true, //是否可以删除该属性或者修改该属性的定义描述对象
+  enumerable: true, //该属性是否可枚举
+  writable: false, //该属性是否可修改，可以定义对象中的常量属性
+  value: 4, //value就是这个属性的值，如果value是一个函数，b就是一个方法
+});
+```
+## getOwnPropertyDescriptor
+
+同 defineProperty 对应的是 getOwnPropertyDescriptor 方法，它用于**获取属性的描述对象**。
+
+`Object.getOwnPropertyDescriptor(object, propertyname)`
+
+例如：
+
+```js
+var descriptor=Object.getOwnPropertyDescriptor(person,"name");
+```
+
+## getOwnPropertyDescriptors
+
+ES5 的`Object.getOwnPropertyDescriptor()`方法会返回某个对象属性的描述对象（descriptor）。ES2017 引入了`Object.getOwnPropertyDescriptors()`（名字多了个 s）方法，返回指定对象**所有**自身**属性**（**非继承属性**）的**描述对象**。
+
+**案例1**
+
+```javascript
+const source = {
+  set foo(value) {
+    console.log(value);
+  }
+};
+
+const target2 = {};
+Object.defineProperties(target2, Object.getOwnPropertyDescriptors(source));
+Object.getOwnPropertyDescriptor(target2, 'foo')
+// { get: undefined,
+//   set: [Function: set foo],
+//   enumerable: true,
+//   configurable: true }
+```
+
+**案例2**
+
+用于合并一个对象，浅拷贝，同时拷贝对应的描述对象。
+
+```js
+// 合并一个对象到另一个对象，注意是浅拷贝。
+// 但是，会复制对象描述，同解构（{...obj}）还是有区别的。
+// 重要的是，这种方法，会覆盖 get 方法到对象上。
+const mergeExports = (obj, exports) => {
+	const descriptors = Object.getOwnPropertyDescriptors(exports);
+	Object.defineProperties(obj, descriptors);
+	return /** @type {A & B} */ (Object.freeze(obj));
+};
+// 使用
+{
+    create: mergeExports(obj1, {
+    	get sync() {
+        	return createSync;
+    	}
+	}),
+}
+```
+
+## freeze
+
+Object.freeze()方法。它的作用是**冻结**一个对象，被冻结的对象有以下几个特性：
+
+不能添加新属性
+
+不能删除已有属性
+
+不能修改已有属性的值
+
+不能修改原型
+
+不能修改已有属性的可枚举性、可配置性、可写性
+
+```js
+Object.defineProperties(obj, descriptors);
+```
+
+**备注**
+
+更多api参考：https://es6.ruanyifeng.com/?tdsourcetag=s_pctim_aiomsg#docs/object-methods#Object-hasOwn
+
 ## [ 案例 ] 补判断两个对象是否相等（引用相等或值相等）
 
 ### 比较一层

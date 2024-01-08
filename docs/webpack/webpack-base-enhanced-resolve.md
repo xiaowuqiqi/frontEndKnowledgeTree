@@ -299,3 +299,506 @@ resolve: {
   ...
 },
 ```
+
+## 源码部分分析
+
+### index
+
+```js
+const resolve = require("enhanced-resolve");
+resolve()
+resolve.sync()
+resolve.create()
+resolve.create.sync()
+```
+
+对外暴露方法，create，sync，ResolverFactory，CachedInputFileSystem
+
+#### create
+
+create 本质是 create 方法。
+
+create.sync 本质是 createSync 方法。
+
+他们处理入参，添加 useSyncFileSystemCalls 和 fileSystem 文件系统相关属性，以及context 属性的默认参数。
+
+以 createSync 方法为例，返回一个 Resolver 实例
+
+```js
+const nodeFileSystem = new CachedInputFileSystem(fs, 4000);
+
+const nodeContext = {
+	environments: ["node+es3+es5+process+native"]
+};
+
+function createSync(options) {
+	options = {
+		useSyncFileSystemCalls: true,
+		fileSystem: nodeFileSystem,
+		...options
+	};
+	const resolver = ResolverFactory.createResolver(options);
+	return function (context, path, request) {
+		if (typeof context === "string") {
+			request = path;
+			path = context;
+			context = nodeContext;
+		}
+		return resolver.resolveSync(context, path, request);
+	};
+}
+```
+
+#### resolve
+
+resolve  本质是 resolve 方法。
+
+resolve.sync 本质是 resolveSync 方法。
+
+他们同上边create相比会闭包保存 ResolverFactory.createResolver 的实例，同时添加 conditionNames 和 extensions 的默认配置。
+
+以 resolveSync 方法为例，直接运行 Resolver 实例获取路径。
+
+```js
+const nodeFileSystem = new CachedInputFileSystem(fs, 4000);
+
+const nodeContext = {
+	environments: ["node+es3+es5+process+native"]
+};
+
+const asyncResolver = ResolverFactory.createResolver({
+ conditionNames: ["node"],
+ extensions: [".js", ".json", ".node"],
+ fileSystem: nodeFileSystem
+});
+
+function resolve(context, path, request, resolveContext, callback) {
+ if (typeof context === "string") {
+  callback = resolveContext;
+  resolveContext = request;
+  request = path;
+  path = context;
+  context = nodeContext;
+ }
+ if (typeof callback !== "function") {
+  callback = resolveContext;
+ }
+ asyncResolver.resolve(context, path, request, resolveContext, callback);
+}
+```
+
+### ResolverFactory
+
+#### createResolve
+
+最重要的方法 createResolver 用于注册多个 hook ，注入系统内的一些 plugin ，然后创建 Resolver 实例。
+
+```js
+exports.createResolver = function (options) {
+ ……
+ const {
+  alias,
+  fallback,
+  aliasFields,
+  exportsFields,
+  extensionAlias,
+  importsFields,
+  extensions,
+  fileSystem,
+  fullySpecified,
+  mainFields,
+  mainFiles,
+  modules,
+  plugins: userPlugins,
+  unsafeCache,
+  resolver: customResolver,
+  restrictions,
+  roots
+  ……
+ } = ……
+
+ const plugins = userPlugins.slice();
+
+ const resolver = customResolver
+  ? customResolver
+  : new Resolver(fileSystem, normalizedOptions);
+
+ //// pipeline ////
+ // 这里是按顺序注册对应 hook 进入，本质是 tapable.AsyncSeriesBailHook 注册。
+ // return (this.hooks[name] = new AsyncSeriesBailHook(
+ // 	["request", "resolveContext"],
+ // 		name
+ // ));
+ resolver.ensureHook("resolve");
+ resolver.ensureHook("internalResolve");
+ resolver.ensureHook("newInternalResolve");
+ resolver.ensureHook("parsedResolve");
+ resolver.ensureHook("describedResolve");
+ resolver.ensureHook("rawResolve");
+ resolver.ensureHook("normalResolve");
+ resolver.ensureHook("internal");
+ resolver.ensureHook("rawModule");
+ resolver.ensureHook("module");
+ resolver.ensureHook("resolveAsModule");
+ resolver.ensureHook("undescribedResolveInPackage");
+ resolver.ensureHook("resolveInPackage");
+ resolver.ensureHook("resolveInExistingDirectory");
+ resolver.ensureHook("relative");
+ resolver.ensureHook("describedRelative");
+ resolver.ensureHook("directory");
+ resolver.ensureHook("undescribedExistingDirectory");
+ resolver.ensureHook("existingDirectory");
+ resolver.ensureHook("undescribedRawFile");
+ resolver.ensureHook("rawFile");
+ resolver.ensureHook("file");
+ resolver.ensureHook("finalFile");
+ resolver.ensureHook("existingFile");
+ resolver.ensureHook("resolved");
+
+ // TODO remove in next major
+ // cspell:word Interal
+ // Backward-compat
+ 
+ resolver.hooks.newInteralResolve = resolver.hooks.newInternalResolve;
+
+ // 下边所有 Plugin 后缀的都继承 ParsePlugin class 
+ // 最后一个参数就是执行 hook 的 name（下边入参是 target）去调用 doResolve。
+ // resolver.doResolve( target, alternative, null, resolveContext, (err, result) => {
+ //		if (err) return callback(err);
+ //		if (result) return callback(null, result);
+ //		resolver.doResolve(target, obj, null, resolveContext, callback);
+ //	});
+ // doResolve 中执行了 this.hooks.resolveStep.call(hook, request);
+    
+ // resolve
+ for (const { source, resolveOptions } of [
+  { source: "resolve", resolveOptions: { fullySpecified } },
+  { source: "internal-resolve", resolveOptions: { fullySpecified: false } }
+ ]) {
+  if (unsafeCache) {
+   plugins.push(
+    new UnsafeCachePlugin(
+     source,
+     cachePredicate,
+     unsafeCache,
+     cacheWithContext,
+     `new-${source}`
+    )
+   );
+   plugins.push(
+    new ParsePlugin(`new-${source}`, resolveOptions, "parsed-resolve")
+   );
+  } else {
+   plugins.push(new ParsePlugin(source, resolveOptions, "parsed-resolve"));
+  }
+ }
+
+ // parsed-resolve
+ plugins.push(
+  new DescriptionFilePlugin(
+   "parsed-resolve",
+   descriptionFiles,
+   false,
+   "described-resolve"
+  )
+ );
+ plugins.push(new NextPlugin("after-parsed-resolve", "described-resolve"));
+
+ // described-resolve
+ plugins.push(new NextPlugin("described-resolve", "raw-resolve"));
+ if (fallback.length > 0) {
+  plugins.push(
+   new AliasPlugin("described-resolve", fallback, "internal-resolve")
+  );
+ }
+
+ // raw-resolve
+ if (alias.length > 0) {
+  plugins.push(new AliasPlugin("raw-resolve", alias, "internal-resolve"));
+ }
+ aliasFields.forEach(item => {
+  plugins.push(new AliasFieldPlugin("raw-resolve", item, "internal-resolve"));
+ });
+ extensionAlias.forEach(item =>
+  plugins.push(
+   new ExtensionAliasPlugin("raw-resolve", item, "normal-resolve")
+  )
+ );
+ plugins.push(new NextPlugin("raw-resolve", "normal-resolve"));
+
+ // normal-resolve
+ if (preferRelative) {
+  plugins.push(new JoinRequestPlugin("after-normal-resolve", "relative"));
+ }
+ plugins.push(
+  new ConditionalPlugin(
+   "after-normal-resolve",
+   { module: true },
+   "resolve as module",
+   false,
+   "raw-module"
+  )
+ );
+ plugins.push(
+  new ConditionalPlugin(
+   "after-normal-resolve",
+   { internal: true },
+   "resolve as internal import",
+   false,
+   "internal"
+  )
+ );
+ if (preferAbsolute) {
+  plugins.push(new JoinRequestPlugin("after-normal-resolve", "relative"));
+ }
+ if (roots.size > 0) {
+  plugins.push(new RootsPlugin("after-normal-resolve", roots, "relative"));
+ }
+ if (!preferRelative && !preferAbsolute) {
+  plugins.push(new JoinRequestPlugin("after-normal-resolve", "relative"));
+ }
+
+ // internal
+ importsFields.forEach(importsField => {
+  plugins.push(
+   new ImportsFieldPlugin(
+    "internal",
+    conditionNames,
+    importsField,
+    "relative",
+    "internal-resolve"
+   )
+  );
+ });
+
+ // raw-module
+ exportsFields.forEach(exportsField => {
+  plugins.push(
+   new SelfReferencePlugin("raw-module", exportsField, "resolve-as-module")
+  );
+ });
+ modules.forEach(item => {
+  if (Array.isArray(item)) {
+   if (item.includes("node_modules") && pnpApi) {
+    plugins.push(
+     new ModulesInHierarchicalDirectoriesPlugin(
+      "raw-module",
+      item.filter(i => i !== "node_modules"),
+      "module"
+     )
+    );
+    plugins.push(
+     new PnpPlugin("raw-module", pnpApi, "undescribed-resolve-in-package")
+    );
+   } else {
+    plugins.push(
+     new ModulesInHierarchicalDirectoriesPlugin(
+      "raw-module",
+      item,
+      "module"
+     )
+    );
+   }
+  } else {
+   plugins.push(new ModulesInRootPlugin("raw-module", item, "module"));
+  }
+ });
+
+ // module
+ plugins.push(new JoinRequestPartPlugin("module", "resolve-as-module"));
+
+ // resolve-as-module
+ if (!resolveToContext) {
+  plugins.push(
+   new ConditionalPlugin(
+    "resolve-as-module",
+    { directory: false, request: "." },
+    "single file module",
+    true,
+    "undescribed-raw-file"
+   )
+  );
+ }
+ plugins.push(
+  new DirectoryExistsPlugin(
+   "resolve-as-module",
+   "undescribed-resolve-in-package"
+  )
+ );
+
+ // undescribed-resolve-in-package
+ plugins.push(
+  new DescriptionFilePlugin(
+   "undescribed-resolve-in-package",
+   descriptionFiles,
+   false,
+   "resolve-in-package"
+  )
+ );
+ plugins.push(
+  new NextPlugin("after-undescribed-resolve-in-package", "resolve-in-package")
+ );
+
+ // resolve-in-package
+ exportsFields.forEach(exportsField => {
+  plugins.push(
+   new ExportsFieldPlugin(
+    "resolve-in-package",
+    conditionNames,
+    exportsField,
+    "relative"
+   )
+  );
+ });
+ plugins.push(
+  new NextPlugin("resolve-in-package", "resolve-in-existing-directory")
+ );
+
+ // resolve-in-existing-directory
+ plugins.push(
+  new JoinRequestPlugin("resolve-in-existing-directory", "relative")
+ );
+
+ // relative
+ plugins.push(
+  new DescriptionFilePlugin(
+   "relative",
+   descriptionFiles,
+   true,
+   "described-relative"
+  )
+ );
+ plugins.push(new NextPlugin("after-relative", "described-relative"));
+
+ // described-relative
+ if (resolveToContext) {
+  plugins.push(new NextPlugin("described-relative", "directory"));
+ } else {
+  plugins.push(
+   new ConditionalPlugin(
+    "described-relative",
+    { directory: false },
+    null,
+    true,
+    "raw-file"
+   )
+  );
+  plugins.push(
+   new ConditionalPlugin(
+    "described-relative",
+    { fullySpecified: false },
+    "as directory",
+    true,
+    "directory"
+   )
+  );
+ }
+
+ // directory
+ plugins.push(
+  new DirectoryExistsPlugin("directory", "undescribed-existing-directory")
+ );
+
+ if (resolveToContext) {
+  // undescribed-existing-directory
+  plugins.push(new NextPlugin("undescribed-existing-directory", "resolved"));
+ } else {
+  // undescribed-existing-directory
+  plugins.push(
+   new DescriptionFilePlugin(
+    "undescribed-existing-directory",
+    descriptionFiles,
+    false,
+    "existing-directory"
+   )
+  );
+  mainFiles.forEach(item => {
+   plugins.push(
+    new UseFilePlugin(
+     "undescribed-existing-directory",
+     item,
+     "undescribed-raw-file"
+    )
+   );
+  });
+
+  // described-existing-directory
+  mainFields.forEach(item => {
+   plugins.push(
+    new MainFieldPlugin(
+     "existing-directory",
+     item,
+     "resolve-in-existing-directory"
+    )
+   );
+  });
+  mainFiles.forEach(item => {
+   plugins.push(
+    new UseFilePlugin("existing-directory", item, "undescribed-raw-file")
+   );
+  });
+
+  // undescribed-raw-file
+  plugins.push(
+   new DescriptionFilePlugin(
+    "undescribed-raw-file",
+    descriptionFiles,
+    true,
+    "raw-file"
+   )
+  );
+  plugins.push(new NextPlugin("after-undescribed-raw-file", "raw-file"));
+
+  // raw-file
+  plugins.push(
+   new ConditionalPlugin(
+    "raw-file",
+    { fullySpecified: true },
+    null,
+    false,
+    "file"
+   )
+  );
+  if (!enforceExtension) {
+   plugins.push(new TryNextPlugin("raw-file", "no extension", "file"));
+  }
+  extensions.forEach(item => {
+   plugins.push(new AppendPlugin("raw-file", item, "file"));
+  });
+
+  // file
+  if (alias.length > 0)
+   plugins.push(new AliasPlugin("file", alias, "internal-resolve"));
+  aliasFields.forEach(item => {
+   plugins.push(new AliasFieldPlugin("file", item, "internal-resolve"));
+  });
+  plugins.push(new NextPlugin("file", "final-file"));
+
+  // final-file
+  plugins.push(new FileExistsPlugin("final-file", "existing-file"));
+
+  // existing-file
+  if (symlinks)
+   plugins.push(new SymlinkPlugin("existing-file", "existing-file"));
+  plugins.push(new NextPlugin("existing-file", "resolved"));
+ }
+
+ // resolved
+ if (restrictions.size > 0) {
+  plugins.push(new RestrictionsPlugin(resolver.hooks.resolved, restrictions));
+ }
+ plugins.push(new ResultPlugin(resolver.hooks.resolved));
+ // 以上是各个 plugins 的注册
+ //// RESOLVER ////
+
+ for (const plugin of plugins) {
+  if (typeof plugin === "function") {
+   plugin.call(resolver, resolver);
+  } else {
+   plugin.apply(resolver);
+  }
+ }
+
+ return resolver;
+};
+```
