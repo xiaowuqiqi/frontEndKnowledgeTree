@@ -197,6 +197,11 @@ str.toUpperCase() // 变大写
 
 str.toLowerCase() // 变小写
 
+### 检测末尾子串
+
+str.endsWith('end') // 精确大小写，如果末尾为 end 结尾返回true
+str.startsWith("Hello"); // 精确大小写，如果开头为 Hello 开头返回true
+
 ### 去除两端空格
 
 str.trim() //两端多余空格
@@ -269,6 +274,152 @@ export default ConsoleReader(({console})=>{
 //// ------------- END -------------
 }); 
 ```
+
+### 正则相关
+
+上边介绍了replace方法，下边在介绍一点正则相关的知识。
+
+#### 常用知识
+
+\b 匹配一个单词边界，即字与空格间的位置。（开头和结尾以及空格都匹配）
+
+\B 非单词边界匹配。
+
+\s 是匹配所有空白符，包括换行。
+
+\S 非空白符。
+
+\d等价于`[0-9]`。
+
+\D等价于`[^0-9]`。
+
+\w等价于`[A-Za-z_0-9]`。
+
+\W等价于`[^A-Za-z_0-9]`。
+
+[] 包含，默认是一个字符长度。
+
+[^] 不包含，默认是一个字符长度。
+
+{n,m} 匹配长度。
+
+. 任何单个字符(字符点)。
+
+| 或
+
+\ 转义
+
+$ 结尾
+
+[A-Z] 26个大写字母
+
+[a-z] 26个小写字母
+
+[0-9] 0至9数字
+
+[A-Za-z0-9] 26个大写字母、26个小写字母和0至9数字
+
+#### **获取匹配：**
+
+`(pattern) ` 匹配 pattern 并获取这一匹配。所获取的匹配，可以从产生的 Matches 集合得到，使用$0…$9属性匹配圆括号字符。
+
+#### **非获取匹配：**
+
+`(?:pattern) ` 非获取匹配，匹配 pattern 但不获取匹配结果。也就是此括号内容不往Matches集合存。
+
+`(?=pattern) ` 非获取匹配，正向肯定预查，在任何匹配 pattern 的字符串开始处匹配查找字符串，该匹配不需要获取供以后使用。
+
+例如，“Windows(?=95|98|NT|2000)” 能匹配 “Windows2000” 中的 “Windows”，但不能匹配 “Windows3.1” 中的 “Windows” 。
+
+`(?!pattern)` 非获取匹配，正向否定预查，在任何不匹配 pattern 的字符串开始处匹配查找字符串，该匹配不需要获取供以后使用。例如 “Windows(?!95|98|NT|2000)” 能匹配 “Windows3.1” 中的 “Windows”，但不能匹配 “Windows2000” 中的 “Windows”。
+
+`(?<=pattern)` 非获取匹配，反向肯定预查，与正向肯定预查类似，只是方向相反。例如，“(?<=95|98|NT|2000)Windows” 能匹配 “2000Windows” 中的 “Windows” ，但不能匹配 “3.1Windows” 中的 “Windows” 。
+
+`(?<!pattern)` 非获取匹配，反向否定预查，与正向否定预查类似，只是方向相反。例如 “(?<!95|98|NT|2000)Windows” 能匹配 “3.1Windows” 中的 “Windows” ，但不能匹配 “2000Windows” 中的 “Windows” 。
+
+
+
+#### \1 \2 \3……解读
+
+相比于 `$1`, `\1`是写入**正则表达式内**的。
+
+`\1` 就是用户用 `()` 定义的第一组，同理 `\2` 就是第二组。
+
+如 `(\d)(\w) \1\2`，其中`\1`就是`\d`匹配的值。
+
+> 注：上面一例与 `(\d)(\w)(\d)(\w)` 不同，`(\d)(\w)(\d)(\w)` 可以匹配 `d1d2`，而 `(\d)(\w) \1\2` 只能匹配 `d1d1` 因为 `(\d)` 一旦匹配就 `\1` 的值就固定了。
+
+
+
+#### exec
+
+检索字符串中与正则表达式匹配的值，返回一个数组，存放匹配的结果。
+
+如果未找到，返回null。
+
+**匹配到一个值**
+
+```js
+const str = "hello world1";
+const r1 = /(hello) (he1)/g
+
+const result = r1.exec(str);
+const [, a, b, c] = result;
+console.log('结果1：',a, b, c)
+console.log('结果2：',result)
+//结果1：hello world1 undefined
+//结果2：
+//[                          
+//  'hello world1',             
+//  'hello',                 
+//  'he1',                   
+//  index: 0,                
+//  input: 'hello world1',
+//  groups: undefined        
+//]   
+```
+
+上述，exec 返回的数组，数组**第一项**固定为**整个正则匹配的值**。**第二项**以及**后边所有项**为**小括号（获取匹配或者说 Matches 集合）**匹配的值。
+
+而 **result.index** 表示匹配到的**子串**第一个字符，在**父串**中的**位置**。**result.input** 表示**父串**。
+
+
+
+**如果匹配到多个值时**
+
+```js
+const str = "hello world1 hello world2";
+const r1 = /(hello) (he[\d]+)/g // 注意一定要有 g 否则永远返回第一个值
+
+const result = r1.exec(str);
+const result2 = r1.exec(str);
+const result3 = r1.exec(str);
+
+console.log(result)
+console.log(result2)
+console.log(result3)
+// [
+//   'hello world1',
+//     'hello',
+//     'he1',
+//     index: 0,
+//   input: 'hello world1 hello world2',
+//   groups: undefined
+// ]
+// [
+//   'hello world2',
+//   'hello',
+//   'he1',
+//   index: 0,
+//   input: 'hello world1 hello world2',
+//   groups: undefined
+// ] 
+// null
+```
+
+当正则表达式设置 g 时，可以多次调用 exec 方法，获取多次匹配，直到为 null。
+
+
 
 ## [案例] 十以内加0
 

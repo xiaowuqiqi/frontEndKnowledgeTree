@@ -33,6 +33,8 @@ yarn test
 有一个 Node.js API，允许根据 Node.js 解析规则解析请求。
 提供同步和异步的 API。`create` 方法允许创建一个自定义解析函数。
 
+> resolve 方法接收三个参数，path 、request 、callback
+
 ```js
 const resolve = require("enhanced-resolve");
 
@@ -450,7 +452,7 @@ exports.createResolver = function (options) {
  resolver.ensureHook("existingDirectory");
  resolver.ensureHook("undescribedRawFile");
  resolver.ensureHook("rawFile");
- resolver.ensureHook("file");
+ resolver.ensureHook("file"); // 路径处理完毕，生成 relativePath。但是文件还未校验。
  resolver.ensureHook("finalFile");
  resolver.ensureHook("existingFile");
  resolver.ensureHook("resolved");

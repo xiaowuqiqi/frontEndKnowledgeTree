@@ -1,12 +1,12 @@
 ---
-title: output
+title: output 属性
 nav: webpack
 group:
   title: 基础
   order: 0
 order: 2
 ---
-# output
+# output 属性
 
 ## asyncChunks
 
