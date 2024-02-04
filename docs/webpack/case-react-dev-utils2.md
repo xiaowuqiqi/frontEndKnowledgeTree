@@ -73,7 +73,9 @@ module.exports = function printBuildError(err) {
 };
 ```
 
-#### `getProcessForPort(port: number): string`
+## getProcessForPort
+
+`getProcessForPort(port: number): string`
 
 查找在 `port` 上当前运行的进程。返回一个包含名称和目录的字符串，例如：
 
@@ -88,11 +90,91 @@ var getProcessForPort = require('react-dev-utils/getProcessForPort');
 getProcessForPort(3000);
 ```
 
-#### `launchEditor(fileName: string, lineNumber: number): void`
+### 源码解析
+
+输入进程号，打印进程对应ProcessId，对应的目录地址（项目地址），进程名字（package.name）
+
+```js
+// child_process 用于程序中创建和管理子进程。
+var execSync = require('child_process').execSync;
+var execFileSync = require('child_process').execFileSync;
+
+function getPackageNameInDirectory(directory) {
+  var packagePath = path.join(directory.trim(), 'package.json');
+  try {
+    return require(packagePath).name;
+  } catch (e) {
+    return null;
+  }
+}
+// 输入进程号，输出ProcessId
+function getProcessIdOnPort(port) {
+  return execFileSync(
+    'lsof',
+    ['-i:' + port, '-P', '-t', '-sTCP:LISTEN'],
+    execOptions
+  )
+    // 在指定的端口上查找正在监听的进程，并返回相应的进程ID（PID）。
+    // 这对于检查端口是否被占用以及查找占用该端口的进程非常有用。
+    .split('\n')[0]
+    .trim();
+}
+// 过滤出对应进程id的目录地址
+function getDirectoryOfProcessById(processId) {
+  return execSync(
+    'lsof -p ' +
+      processId +
+      ' | awk \'$4=="cwd" {for (i=9; i<=NF; i++) printf "%s ", $i}\'',
+    execOptions
+  ).trim();
+}
+
+function getProcessCommand(processId, processDirectory) {
+  var command = execSync(
+    'ps -o command -p ' + processId + ' | sed -n 2p',
+    execOptions
+  );
+
+  command = command.replace(/\n$/, '');
+
+  if (isProcessAReactApp(command)) {
+    // packageName => package.name
+    const packageName = getPackageNameInDirectory(processDirectory);
+    return packageName ? packageName : command;
+  } else {
+    return command;
+  }
+}
+
+function getProcessForPort(port) {
+  try {
+      // 进程对应的id
+    var processId = getProcessIdOnPort(port);
+      // 运行目录地址
+    var directory = getDirectoryOfProcessById(processId);
+      // 进程名字或者package.name
+    var command = getProcessCommand(processId, directory);
+    return (
+      chalk.cyan(command) +
+      chalk.grey(' (pid ' + processId + ')\n') +
+      chalk.blue('  in ') +
+      chalk.cyan(directory)
+    );
+  } catch (e) {
+    return null;
+  }
+}
+```
+
+## launchEditor
+
+`launchEditor(fileName: string, lineNumber: number): void`
 
 在macOS上，尝试找到已知的运行编辑器进程，并在其中打开文件。还可以通过 `REACT_EDITOR`、`VISUAL` 或 `EDITOR` 环境变量进行显式配置。例如，您可以在 `.env.local` 文件中放置 `REACT_EDITOR=atom`，Create React App 将尊重该配置。
 
-#### `noopServiceWorkerMiddleware(servedPath: string): ExpressMiddleware`
+## noopServiceWorkerMiddleware
+
+`noopServiceWorkerMiddleware(servedPath: string): ExpressMiddleware`
 
 返回Express中间件，提供一个 `${servedPath}/service-worker.js`，重置先前设置的任何服务工作者配置。在开发中很有用。
 

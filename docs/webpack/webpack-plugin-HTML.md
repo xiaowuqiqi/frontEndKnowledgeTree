@@ -30,7 +30,7 @@ order: 4
 >
 > 然后在html引入变量
 >
-> ```html
+> ```jsx | pure
 > <!DOCTYPE html>
 > <html>
 >   <head>
@@ -85,7 +85,7 @@ template = ''
 >   ]
 > ```
 >
-> ```html
+> ```jsx | pure
 > <!DOCTYPE html>
 > <html>
 >   <head>

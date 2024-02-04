@@ -46,7 +46,7 @@ app.component('MyComponent', defineAsyncComponent(() =>
 
 也可以直接在父组件中直接定义它们：
 
-```html
+```jsx | pure
 <script setup>
 import { defineAsyncComponent } from 'vue'
 
@@ -107,7 +107,7 @@ export default {
 
 如果使用 `<script setup>`，那么顶层 `await` 表达式会自动让该组件成为一个异步依赖：
 
-```html
+```jsx | pure
 <script setup>
 const res = await fetch(...)
 const posts = await res.json()
@@ -152,7 +152,7 @@ template
 
 父级：
 
-```html
+```jsx | pure
 <script setup>
 import Async from './async.vue';
 import {onErrorCaptured,ref} from "vue";
@@ -189,7 +189,7 @@ const clearErrRef = ()=>{
 
 子级：
 
-```html
+```jsx | pure
 <script setup>
 import {defineProps, watch, ref} from 'vue'
 

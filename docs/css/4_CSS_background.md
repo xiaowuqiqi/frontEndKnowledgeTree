@@ -73,7 +73,7 @@ a:hover{
 }
 ```
 
-```html
+```jsx | pure
 <a href="javascript:;"></a>
 ```
 
@@ -91,7 +91,7 @@ input{
 }
 ```
 
-```html
+```jsx | pure
 <input type="text" name="">
 ```
 
@@ -152,7 +152,7 @@ ul li:nth-child(7){
 }
 ```
 
-```html
+```jsx | pure
 <ul>
 	<li></li>
 	<li></li>
@@ -213,7 +213,7 @@ span{
 }
 ```
 
-```html
+```jsx | pure
 <a href="javascript:;"><span>点击进入首页</span></a>
 <a href="javascript:;"><span>更多详情</span></a>
 <a href="javascript:;"><span>联系</span></a>

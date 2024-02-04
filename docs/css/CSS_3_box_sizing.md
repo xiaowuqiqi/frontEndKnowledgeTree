@@ -104,7 +104,7 @@ div:hover::after{
 }
 ```
 
-```html
+```jsx | pure
 <body>
     <div><img src="img/img.jpg" alt=""></div>
 </body>

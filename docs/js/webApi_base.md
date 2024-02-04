@@ -40,7 +40,7 @@ group: 5 webAPI
 
 > 静态与动态的对比: 像 getElementsByTagName 返回的是一个真实 dom 树列表, 它存入变量中的值, 更像是一个指向 dom 树本身的指针.
 >
-> ```html
+> ```jsx | pure
 > <ul>
 >     <li>aaa</li>
 >     <li>ddd</li>
@@ -142,7 +142,7 @@ nodeValue 返回或设置当前节点的值 常见的节点分为四类:
 
 > 说到节点, 有时会帮我们完成一些需求. 文字节点可以精确的控制文字内容, 注释节点有时候还会用到模板引擎的循环上.
 
-```html
+```jsx | pure
 <div class="val">
     123
     <span>
@@ -184,7 +184,7 @@ const setVal = ()=>{
 
 > 深度优先遍历, 可以用[递归](code/深度优先.html)的算法实现, 而任何递归执行操作的本质都是栈的入栈出栈.
 >
-> ```html
+> ```jsx | pure
 > <div id="main">1
 >   <div>2
 >     <span>3
@@ -405,7 +405,7 @@ for(big; loop; here) {
 
 二者除了兼容性, 不同之处还有：textContent 会获取所有元素的内容, 包括 script 和 style 元素, 然而 innerText 只展示给人看的元素, innerText 受 CSS 样式的影响,并且不会返回隐藏元素的文本.
 
-```html
+```jsx | pure
 <div id="ceshi">测试<span>textContent</span>属性</div>
  
 <button onclick="edit()">edit!</button>
@@ -432,7 +432,7 @@ cloneNode(true), createElement, insertBefore
 
 其实replaceChild相比其他几个用的不是很多, 更多的是用到的是appendChild, insertBefore, 用他们元素的封装插入函数, 但是这个操作回流就不可避免了.
 
-```html
+```jsx | pure
 <div id="1">1</div>
 <div id="2">2</div>
 <div id="3"><span>3</span></div>
@@ -525,7 +525,7 @@ var ele10 = document.getElementById('10');
 >
 > **拿到, 拿到这个值可以遍历, 还可以...**
 >
-> ```html
+> ```jsx | pure
 > <div id="data">
 >     <div style="background-color: #3f5fbf">
 >         <div style="background-color: red">

@@ -22,7 +22,7 @@ console.log(count.value) // 1
 
 在模板中使用 ref 时，我们**不**需要附加 `.value`，你也可以直接在事件监听器中改变一个 ref：
 
-```html
+```jsx | pure
 <button @click="count++">
   {{ count }}
 </button>
@@ -32,7 +32,7 @@ console.log(count.value) // 1
 
 在 `setup()` 函数中手动暴露大量的状态和方法非常繁琐。幸运的是，我们可以通过使用[单文件组件 (SFC)](https://cn.vuejs.org/guide/scaling-up/sfc.html) 来避免这种情况。我们可以使用 `<script setup>` 来大幅度地简化代码：
 
-```html
+```jsx | pure
 <script setup>
 import { ref } from 'vue'
 
@@ -123,7 +123,7 @@ const state = reactive({ count: 0 })
 
 在模板中使用：
 
-```html
+```jsx | pure
 <button @click="state.count++">
   {{ state.count }}
 </button>
@@ -185,7 +185,7 @@ callSomeFunction(state.count)
 
 > `computed()` 方法期望接收一个 getter 函数，返回值为一个**计算属性 ref**。和其他一般的 ref 类似，你可以通过 `publishedBooksMessage.value` 访问计算结果。
 
-```html
+```jsx | pure
 <script setup>
 import { reactive, computed } from 'vue'
 
@@ -222,7 +222,7 @@ const publishedBooksMessage = computed(() => {
 
 现在当你再运行 `fullName.value = 'John Doe'` 时，setter 会被调用而 `firstName` 和 `lastName` 会随之更新。
 
-```html
+```jsx | pure
 <script setup>
 import { ref, computed } from 'vue'
 
@@ -247,7 +247,7 @@ const fullName = computed({
 
 `v-if` 指令用于条件性地渲染一块内容。这块内容只会在指令的表达式返回真值时才被渲染。
 
-```html
+```jsx | pure
 <div v-if="type === 'A'">
   A
 </div>
@@ -281,7 +281,7 @@ const parentMessage = ref('Parent')
 const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
 ```
 
-```html
+```jsx | pure
 <li v-for="(item, index) in items">
   {{ parentMessage }} - {{ index }} - {{ item.message }}
 </li>
@@ -299,7 +299,7 @@ const myObject = reactive({
 })
 ```
 
-```html
+```jsx | pure
 <ul>
   <li v-for="value in myObject">
     {{ value }}
@@ -309,7 +309,7 @@ const myObject = reactive({
 
 或者
 
-```html
+```jsx | pure
 <li v-for="(value, key, index) in myObject">
   {{ index }}. {{ key }}: {{ value }}
 </li>
@@ -323,7 +323,7 @@ const myObject = reactive({
 
 为了给 Vue 一个提示，以便它可以跟踪每个节点的标识，从而重用和重新排序现有的元素，你需要为每个元素对应的块提供一个唯一的 `key` attribute：
 
-```html
+```jsx | pure
 <div v-for="item in items" :key="item.id">
   <!-- 内容 -->
 </div>
@@ -351,7 +351,7 @@ const evenNumbers = computed(() => {
 })
 ```
 
-```html
+```jsx | pure
 <li v-for="n in evenNumbers">{{ n }}</li>
 ```
 
@@ -370,13 +370,13 @@ const evenNumbers = computed(() => {
 
 `v-model` 可以在组件上使用以实现双向绑定。
 
-```html
+```jsx | pure
 <input v-model="searchText" />
 ```
 
 等价于
 
-```html
+```jsx | pure
 <input
   :value="searchText"
   @input="searchText = $event.target.value"
@@ -389,7 +389,7 @@ const evenNumbers = computed(() => {
 
 子级：
 
-```html
+```jsx | pure
 <script setup>
 defineProps(['modelValue'])
 defineEmits(['update:modelValue'])
@@ -406,7 +406,7 @@ defineEmits(['update:modelValue'])
 
 父级：
 
-```html
+```jsx | pure
 <script setup>
 import {ref} from 'vue';
 import Childe from './childe.vue';

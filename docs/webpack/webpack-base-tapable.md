@@ -261,7 +261,7 @@ export {myCar, myCar2, asyncCar3}
 
 jsx：
 
-```html
+```jsx | pure
   <section>
     <h4>使用测试</h4>
     <button onClick={() => {

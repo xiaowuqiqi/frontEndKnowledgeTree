@@ -362,7 +362,7 @@ none 默认值。与 0 相同。不设置透视。
 
 为了更好的理解，下面我们来看一个例子：
 
-```html
+```jsx | pure
 <div class="page">
     <div class="cude">
         <div class="dice">
@@ -475,7 +475,7 @@ hidden 背面是不可见的。
 
 右边的div加了backface-visibility:hidden;
 
-```html
+```jsx | pure
 <div class="box"></div>
 <div class="box backface"></div>
 ```

@@ -196,7 +196,7 @@ export default (props) => {
 >
 > 此 loader 生成的代码如下：
 >
-> ```html
+> ```jsx | pure
 > <link rel="stylesheet" href="path/to/style.css" />
 > <link rel="stylesheet" href="path/to/other-styles.css" />
 > ```
@@ -224,7 +224,7 @@ export default (props) => {
 > ```
 > 结果
 >
-> ```html
+> ```jsx | pure
 > <style id="id"></style>
 > ```
 
@@ -361,7 +361,7 @@ outions.import = true
 > }
 > ```
 >
-> ```html
+> ```jsx | pure
 > import styles from './app2mod.module.less';
 > // app2.js
 > <div className={styles.red4}>
@@ -413,7 +413,7 @@ outions.import = true
 }
 ```
 
-```html
+```jsx | pure
 <div className={styles.colorTest}>red1</div>
 ```
 

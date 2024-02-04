@@ -215,7 +215,7 @@ function second(second) {
 有时候发现修改了样式或者js，刷新的时候不变，这就是客户端缓存了css或者js文件，需要清一下缓存。为了不必每次都清一下缓存，应该怎么弄呢？
 //方法一
 
-```html
+```jsx | pure
 <script type="text/javascript">
 (function(){ 
      var randomh=Math.random();
@@ -233,7 +233,7 @@ function second(second) {
 
 //方法二
 
-```html
+```jsx | pure
 <script>document.write("<script type='text/javascript' src='//site.com/js.js?v=" + Date.now() + "'><\/script>");</script>
 ```
 

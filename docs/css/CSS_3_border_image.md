@@ -36,7 +36,7 @@ border-image: url("img/borderImg.png") 179/10px round;
 }
 ```
 
-```html
+```jsx | pure
 <div id="test"></div>
 ```
 
@@ -60,7 +60,7 @@ border-image: url("img/borderImg.png") 179/10px round;
 }
 ```
 
-```html
+```jsx | pure
 <div id="test2">
 	<p>你好,这是一个按钮</p>
 </div>
@@ -125,7 +125,7 @@ linear-gradient(0deg, blue, green 40%, red);
 
 ![image-20231215085217384](./CSS_3_border_image.assets/image-20231215085217384.png)
 
-```html
+```jsx | pure
 <style>
 .box {
     border: 20px dashed black;

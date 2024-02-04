@@ -108,7 +108,7 @@ outline: red solid thick;/*thick代表粗，此位置也可以像素值*/
 
 > 注：span标签内就不要再加其他内容了
 
-```html
+```jsx | pure
 <span class="icon-image"></span>
 ```
 
@@ -137,7 +137,7 @@ i{
 }
 ```
 
-```html
+```jsx | pure
 <p><i></i> 上传图片</p>
 ```
 
@@ -166,7 +166,7 @@ i{
 > 注：行内块两元素间存在间隙问题，一般间隙为4px（chrome间隙为8px）。
 > 可以用以下方式解决
 
-```html
+```jsx | pure
 <div></div
 ><span></span
 ><a href="#"></a>
@@ -215,7 +215,7 @@ a{
     vertical-align:middle;
 }
 ```
-```html
+```jsx | pure
 <div class="wrapper"
 	><div class="content">some content</div>
 </div>
@@ -264,7 +264,7 @@ div{
 	background-color: #ccc;
 }
 ```
-```html
+```jsx | pure
 <div>这是一行文字</div>
 ```
 执行结果：
@@ -293,7 +293,7 @@ line-height: normal;
 	background-color: #ccc;
 }
 ```
-```html
+```jsx | pure
 <div class="div2">
 	<img src="timg.jpg" alt="">中文English
 </div>

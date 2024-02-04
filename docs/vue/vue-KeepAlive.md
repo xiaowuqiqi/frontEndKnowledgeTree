@@ -12,7 +12,7 @@ nav: VUE框架
 
 默认情况下，一个组件实例在被替换掉后（使用`:is`）会被销毁。这会导致它丢失其中所有已变化的状态
 
-```html
+```jsx | pure
 <!-- 非活跃的组件将会被缓存！ -->
 <KeepAlive>
   <component :is="activeComponent" />
@@ -29,7 +29,7 @@ nav: VUE框架
 
 可以是一个以英文逗号分隔的字符串、一个正则表达式，或是包含这两种类型的一个数组：
 
-```html
+```jsx | pure
 <!-- 以英文逗号分隔的字符串 -->
 <KeepAlive include="a,b">
   <component :is="view" />
@@ -54,7 +54,7 @@ nav: VUE框架
 
 `<KeepAlive>` 的行为在指定了 `max` 后类似一个 [LRU 缓存](https://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_used_(LRU))：如果缓存的实例数量即将超过指定的那个最大数量，则**最久没有被访问**的缓存实例将**被销毁**，以便为新的实例腾出空间。
 
-```html
+```jsx | pure
 <KeepAlive :max="10">
   <component :is="activeComponent" />
 </KeepAlive>
@@ -66,7 +66,7 @@ nav: VUE框架
 
 一个持续存在的组件可以通过 [`onActivated()`](https://cn.vuejs.org/api/composition-api-lifecycle.html#onactivated) 和 [`onDeactivated()`](https://cn.vuejs.org/api/composition-api-lifecycle.html#ondeactivated) 注册相应的两个状态的生命周期钩子：
 
-```html
+```jsx | pure
 <script setup>
 import { onActivated, onDeactivated } from 'vue'
 

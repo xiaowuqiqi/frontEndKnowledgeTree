@@ -18,7 +18,7 @@ Internet Explorer 9+, Firefox, Opera, Chrome, 和 Safari 支持 `<canvas>` 元�
 
 **模板骨架**
 
-```html
+```jsx | pure
 <canvas id="mycanvas" width="200" height="300">您的浏览器不支持canvas</canvas>
 <script>
     var cc=document.getElementById("mycanvas");    
@@ -94,7 +94,7 @@ width和height设置矩形的尺寸。
 
 例子：
 
-```html
+```jsx | pure
 <script>
 		var cc=document.getElementById("mycanvas");
 		if(cc.getContext){

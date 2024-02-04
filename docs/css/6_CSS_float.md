@@ -40,7 +40,7 @@ order: 6
 }
 ```
 
-```html
+```jsx | pure
 <div style="overflow: hidden"><!--为父级元素清除浮动-->
     <div class="div1 div"></div>
 </div>
@@ -70,7 +70,7 @@ order: 6
 }
 ```
 
-```html
+```jsx | pure
 <div class="div3-1"></div>
 <div class="div3-2"></div>
 ```
@@ -82,7 +82,7 @@ order: 6
 
 1，在最后一个浮动div后加上：
 
-```html
+```jsx | pure
 <div style="clear: both"></div>
 ```
 
@@ -102,7 +102,7 @@ order: 6
 }
 ```
 
-```html
+```jsx | pure
 <div class="div4">
     <div class="div4-1">浮动</div>
     <div class="div4-2">浮动</div>
@@ -122,7 +122,7 @@ order: 6
 }
 ```
 
-```html
+```jsx | pure
 <div class="div4">
     <div class="div4-1">浮动</div>
     <div class="div4-2">浮动</div>

@@ -11,7 +11,7 @@ order: 6
 
 骰子一个面我们设置为一层 box div ，这层 div 内部 span 代表一个点数。
 
-```html
+```jsx | pure
 <div class="box">
   <span class="item"></span>
 </div>
@@ -185,7 +185,7 @@ order: 6
 
 ![image-20230923122051136](./CSS_3_flex_test.assets/image-20230923122051136.png)
 
-```html
+```jsx | pure
 <div class="box">
   <div class="column">
     <span class="item"></span>
@@ -250,7 +250,7 @@ order: 6
 
 HTML代码如下。
 
-```html
+```jsx | pure
 <div class="box">
   <div class="row">
     <span class="item"></span>

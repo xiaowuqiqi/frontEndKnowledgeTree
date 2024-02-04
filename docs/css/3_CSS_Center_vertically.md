@@ -23,7 +23,7 @@ order: 3
         display: table-cell;
     }
 ```
-```html
+```jsx | pure
 <div class="parent">
     <div class="child">
         <p>你好</p>
@@ -47,7 +47,7 @@ div{
     /*变形的位移是以当前元素长宽为参考设置百分比 */
 }
 ```
-```html
+```jsx | pure
 <div class="parent"></div>
 ```
 
@@ -71,7 +71,7 @@ div{
     vertical-align:middle;
 }
 ```
-```html
+```jsx | pure
 <div class="parent">
     <div class="child">
         你好
@@ -93,7 +93,7 @@ div{
     margin: auto;
 }
 ```
-```html
+```jsx | pure
 <div class="parent">
     <div class="child">
         你好
@@ -120,7 +120,7 @@ div{
     margin:auto;
 }
 ```
-```html
+```jsx | pure
 <div class="parent">
     <div class="child">
         你好
@@ -144,7 +144,7 @@ position:relative;
 right:50%;   
 }  
 ```
-```html
+```jsx | pure
 <div class="parent">
     <div class="child">
         你好
@@ -164,7 +164,7 @@ right:50%;
     left:50%; 
 } 
 ```
-```html
+```jsx | pure
 <div class="parent">
     <div class="child">
         你好
@@ -183,7 +183,7 @@ right:50%;
     right: 0; 
 } 
 ```
-```html
+```jsx | pure
 <div class="parent">
     <div class="child">
         你好

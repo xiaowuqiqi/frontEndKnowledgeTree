@@ -38,7 +38,7 @@ order: 2
 
 代码如下：
 
-```html
+```jsx | pure
 <style>
 .viewport {
   height: 500px;
@@ -92,7 +92,7 @@ order: 2
 
 代码如下：
 
-```html
+```jsx | pure
 <style>
     .viewport2 {
       height: 500px;

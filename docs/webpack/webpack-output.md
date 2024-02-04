@@ -254,7 +254,7 @@ output.iife = true
 >
 > 此时，变量 `MyLibrary` 将与你的入口文件所导出的文件进行绑定，下面是如何使用 webpack 构建的库的实现：
 >
-> ```html
+> ```jsx | pure
 > <script src="https://example.org/path/to/my-library.js"></script>
 > <script>
 >   MyLibrary.hello('webpack');

@@ -18,7 +18,7 @@ nav: VBU
 
 要为组件后代提供数据，需要使用到 [`provide()`](https://cn.vuejs.org/api/composition-api-dependency-injection.html#provide) 函数：
 
-```html
+```jsx | pure
 <script setup>
 import { provide } from 'vue'
 
@@ -63,7 +63,7 @@ app.provide(/* 注入名 */ 'message', /* 值 */ 'hello!')
 
 要注入上层组件提供的数据，需使用 [`inject()`](https://cn.vuejs.org/api/composition-api-dependency-injection.html#inject) 函数：
 
-```html
+```jsx | pure
 <script setup>
 import { inject } from 'vue'
 
@@ -129,7 +129,7 @@ export const initStore = ()=>{
 
 ### 跟组件引入
 
-```html
+```jsx | pure
 <script setup>
 import {initStore} from'./store'
 import Children1 from './components/children1.vue'
@@ -146,7 +146,7 @@ initStore()
 
 ### children1
 
-```html
+```jsx | pure
 <script setup>
 import {inject} from 'vue';
 const store = inject('store');
@@ -172,7 +172,7 @@ const splite1_2 = () => {
 
 ### children2
 
-```html
+```jsx | pure
 <script setup>
 import {inject, ref, computed} from 'vue';
 const store = inject('store');

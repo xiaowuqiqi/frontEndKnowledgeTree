@@ -16,7 +16,7 @@ CSS又称为层叠样式表，是一种用来表现HTML（标准通用标记语�
 
 在标签内利用`style`（英译：样式；风格）属性直接可以设置css样式，如：
 
-```html
+```jsx | pure
 <div style="color:#ccc">你好</div>
 ```
 
@@ -24,13 +24,13 @@ CSS又称为层叠样式表，是一种用来表现HTML（标准通用标记语�
 
 利用link标签引用外部样式，属性：`href`设置css样式文件的URL，`type="text/css"`引用文件的类型（可省略），`rel="stylesheet"`表示被连接的文档是样式表文件。
 
-```html
+```jsx | pure
 <link rel="stylesheet" href="" type="text/css" />
 ```
 
 ### 在 style 标签内使用
 
-```html
+```jsx | pure
 <style type="text/css">
     h1 {
         color: red
@@ -73,7 +73,7 @@ CSS又称为层叠样式表，是一种用来表现HTML（标准通用标记语�
 
 除了简单的选择器之外，还有常用的属性选择器：
 
-```html
+```jsx | pure
 <div start="head-body-foot">你好</div>
 ```
 
@@ -167,7 +167,7 @@ CSS又称为层叠样式表，是一种用来表现HTML（标准通用标记语�
 
 > 注：“选择某个元素的第一个子元素”实际是指`":"`前边的元素的父级元素下的第一个元素。如：
 
-```html
+```jsx | pure
 <div>
 <a href="javascript:;">连接</a>
 <p>p1</p>
@@ -265,7 +265,7 @@ p:first-child{
       }
 ```
 
-```html
+```jsx | pure
 <input type="checkbox" />
 ```
 
@@ -285,7 +285,7 @@ p:first-child{
 }
 ```
 
-```html
+```jsx | pure
 <p class="division">分割线</p>
 ```
 

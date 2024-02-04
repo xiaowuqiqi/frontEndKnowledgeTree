@@ -12,7 +12,7 @@ nav: VBU
 
 注意**在组件挂载后**才能访问模板引用，要使用 onMounted 或者 watchEffect。
 
-```html
+```jsx | pure
 <script setup>
 import { ref, onMounted } from 'vue';
 // 声明一个 ref 来存放该元素的引用
@@ -51,7 +51,7 @@ export default {
 
 选项式api：
 
-```html
+```jsx | pure
 <script>
 export default {
   mounted() {
@@ -63,7 +63,7 @@ export default {
 
 ### **在 v-for 中使用**
 
-```html
+```jsx | pure
 <script setup>
 import { ref, onMounted } from 'vue'
 
@@ -89,7 +89,7 @@ onMounted(() => console.log(itemRefs.value))
 
 `ref` attribute 还可以绑定为一个函数，会在每次组件更新时都被调用。该函数会收到元素引用作为其第一个参数：
 
-```html
+```jsx | pure
 <input :ref="(el) => { /* 将 el 赋值给一个数据属性或 ref 变量 */ }">
 ```
 
@@ -108,7 +108,7 @@ ref 就是组件的 `this` 。
 
 父级：
 
-```html
+```jsx | pure
 <script setup>
 import Childe from './childe.vue'
 import {ref,onMounted} from 'vue';
@@ -137,7 +137,7 @@ onMounted(()=>{
 
 需要 defineExpose 外放属性，ref才能获取到
 
-```html
+```jsx | pure
 <script setup>
 import {ref,defineExpose} from 'vue';
 
@@ -171,7 +171,7 @@ defineExpose({
 
 子级组件获取父级组件传入的值，需要用到 defineProps。
 
-```html
+```jsx | pure
 <!-- BlogPost.vue -->
 <script setup>
 defineProps(['title'])
@@ -199,7 +199,7 @@ export default {
 
 父级传入固定数据：
 
-```html
+```jsx | pure
 <BlogPost title="My journey with Vue" />
 <BlogPost title="Blogging with Vue" />
 <BlogPost title="Why Vue is so fun" />
@@ -215,7 +215,7 @@ const posts = ref([
 ])
 ```
 
-```html
+```jsx | pure
 <BlogPost
   v-for="post in posts"
   :key="post.id"
@@ -247,7 +247,7 @@ export default {
 
 如果你正在搭配 TypeScript 使用 `<script setup>`，也可以使用类型标注来声明 
 
-```html
+```jsx | pure
 <script setup lang="ts">
 defineProps<{
   title?: string
@@ -260,7 +260,7 @@ defineProps<{
 
 为了和 HTML attribute 对齐，我们通常会将其写为 kebab-case 形式：
 
-```html
+```jsx | pure
 <MyComponent greeting-message="hello" />
 ```
 
@@ -272,13 +272,13 @@ defineProps({
 })
 ```
 
-```html
+```jsx | pure
 <span>{{ greetingMessage }}</span>
 ```
 
 ### 静态 vs. 动态 Prop
 
-```html
+```jsx | pure
 <!-- 仅写上 prop 但不传值，会隐式转换为 `true` -->
 <BlogPost is-published />
 
@@ -290,7 +290,7 @@ defineProps({
 <BlogPost :is-published="post.isPublished" />
 ```
 
-```html
+```jsx | pure
 <!-- 虽然这个数组是个常量，我们还是需要使用 v-bind -->
 <!-- 因为这是一个 JavaScript 表达式而不是一个字符串 -->
 <BlogPost :comment-ids="[234, 266, 273]" />
@@ -299,7 +299,7 @@ defineProps({
 <BlogPost :comment-ids="post.commentIds" />
 ```
 
-```html
+```jsx | pure
 <!-- 虽然这个对象字面量是个常量，我们还是需要使用 v-bind -->
 <!-- 因为这是一个 JavaScript 表达式而不是一个字符串 -->
 <BlogPost
@@ -324,13 +324,13 @@ const post = {
 
 以及下面的模板：
 
-```html
+```jsx | pure
 <BlogPost v-bind="post" />
 ```
 
 而这实际上等价于：
 
-```html
+```jsx | pure
 <BlogPost :id="post.id" :title="post.title" />
 ```
 
@@ -400,7 +400,7 @@ const normalizedSize = computed(() => props.size.trim().toLowerCase()
 
 **boolean转化**
 
-```html
+```jsx | pure
 <!-- 等同于传入 :disabled="true" -->
 <MyComponent disabled />
 
@@ -424,7 +424,7 @@ const normalizedSize = computed(() => props.size.trim().toLowerCase()
 const postFontSize = ref(1)
 ```
 
-```html
+```jsx | pure
 <BlogPost
   ...
   @enlarge-text="postFontSize += 0.1"
@@ -435,7 +435,7 @@ const postFontSize = ref(1)
 
 子组件可以通过调用内置的 [**`$emit`** 方法](https://cn.vuejs.org/api/component-instance.html#emit)，通过传入事件名称来抛出一个事件，同时需要 defineEmits 声明抛出事件：
 
-```html
+```jsx | pure
 <script setup>
 defineProps(['title'])
 defineEmits(['enlarge-text'])
@@ -454,7 +454,7 @@ defineEmits(['enlarge-text'])
 
  `<script setup>` 中抛出事件，因为此处无法直接访问 $emit：
 
-```html
+```jsx | pure
 <script setup>
 const emit = defineEmits(['enlarge-text'])
 
@@ -479,13 +479,13 @@ export default {
 
 一个父组件使用了这个组件，并且传入了 `class`：
 
-```html
+```jsx | pure
 <MyButton class="large" />
 ```
 
 最后渲染出的 DOM 结果是：
 
-```html
+```jsx | pure
 <button class="large">click me</button>
 ```
 
@@ -493,7 +493,7 @@ export default {
 
 同样的规则也适用于 `v-on` 事件监听器：
 
-```html
+```jsx | pure
 <MyButton @click="onClick" />
 ```
 
@@ -505,7 +505,7 @@ export default {
 
 从 3.3 开始你也可以直接在 `<script setup>` 中使用 [`defineOptions`](https://cn.vuejs.org/api/sfc-script-setup.html#defineoptions)：
 
-```html
+```jsx | pure
 <script setup>
 defineOptions({
   inheritAttrs: false
@@ -518,7 +518,7 @@ defineOptions({
 
 这些透传进来的 attribute 可以在模板的表达式中直接用 `$attrs` 访问到。
 
-```html
+```jsx | pure
 <span>Fallthrough attribute: {{ $attrs }}</span>
 ```
 
@@ -533,7 +533,7 @@ defineOptions({
 
 我们想要所有像 `class` 和 `v-on` 监听器这样的透传 attribute 都应用在内部的 `<button>` 上而不是外层的 `<div>` 上。我们可以通过设定 `inheritAttrs: false` 和使用 `v-bind="$attrs"` 来实现：
 
-```html
+```jsx | pure
 <script setup>
 defineOptions({
   inheritAttrs: false
@@ -550,7 +550,7 @@ defineOptions({
 
 如果需要，你可以在 `<script setup>` 中使用 `useAttrs()` API 来访问一个组件的所有透传 attribute：
 
-```html
+```jsx | pure
 <script setup>
 import { useAttrs } from 'vue'
 
@@ -573,7 +573,7 @@ export default {
 
 父级：
 
-```html
+```jsx | pure
 <script setup>
 import Btn from './childe.vue'
 import {ref} from 'vue';
@@ -597,7 +597,7 @@ let count1 = ref(0);
 
 子级：
 
-```html
+```jsx | pure
 <script setup>
 defineOptions({
   inheritAttrs: false

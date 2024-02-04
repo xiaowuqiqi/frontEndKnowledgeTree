@@ -79,7 +79,7 @@ z-index:99;
 }
 ```
 
-```html
+```jsx | pure
 <div class="div1">a</div><div class="div2">b</div>
 ```
 执行结果：
@@ -131,7 +131,7 @@ span{
 }
 ```
 
-```html
+```jsx | pure
 <div class="parents">
 	<div class="child"></div>
 </div>
@@ -186,7 +186,7 @@ span{
 }
 ```
 
-```html
+```jsx | pure
 <div class="div4"></div>
 ```
 执行结果：

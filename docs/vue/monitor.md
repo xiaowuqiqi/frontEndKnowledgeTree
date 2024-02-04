@@ -12,7 +12,7 @@ nav: VUE框架
 
 在组合式 API 中，我们可以使用 [`watch` 函数](https://cn.vuejs.org/api/reactivity-core.html#watch)在每次响应式状态发生变化时触发回调函数：
 
-```html
+```jsx | pure
 <script setup>
 import { ref, watch } from 'vue'
 
@@ -193,7 +193,7 @@ watchEffect和computed都有点类似于react的useMemo。
 
 computed若是值没有被使用时不会调用，但是watchEffect始终会调用一次。
 
-```html
+```jsx | pure
 <script setup>
 import { ref, computed, watchEffect } from 'vue';
 const count = ref(0);
@@ -270,7 +270,7 @@ watchPostEffect(() => {
 
 侦听器必须用**同步**语句创建：如果用异步回调创建一个侦听器，那么它不会绑定到当前组件上，你必须手动停止它，以防内存泄漏。如下方这个例子：
 
-```html
+```jsx | pure
 <script setup>
 import { watchEffect } from 'vue'
 
@@ -335,7 +335,7 @@ watchEffect(() => {
 
   通过模板引用访问一个元素：
 
-  ```html
+  ```jsx | pure
   <script setup>
   import { ref, onMounted } from 'vue'
   
@@ -377,7 +377,7 @@ watchEffect(() => {
 
   访问更新后的 DOM
 
-  ```html
+  ```jsx | pure
   <script setup>
   import { ref, onUpdated } from 'vue'
   
@@ -417,7 +417,7 @@ watchEffect(() => {
 
 - **示例**
 
-  ```html
+  ```jsx | pure
   <script setup>
   import { onMounted, onUnmounted } from 'vue'
   

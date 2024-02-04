@@ -14,14 +14,14 @@ nav:
 
 第一种：**直接获取**
 
-```html
+```jsx | pure
 <img src="xxjpg"  id="myimg"/>
 <script>var img=document.getElementById("myimg");</script>
 ```
 
 第二种：**动态创建**
 
-```html
+```jsx | pure
 <script>
 	var img=new Image();
 	img.src="xx.jpg";    
@@ -353,7 +353,7 @@ img.onload=function(){
 
 首先我们定义用一个a标签定义下载的链接，然后再给a设置下载的链接。
 
-```html
+```jsx | pure
 <a id="download"  download="aa.png">下载</a>
 ```
 

@@ -14,7 +14,7 @@ nav: VUE框架
 const count = ref(0)
 ```
 
-```html
+```jsx | pure
 <button @click="count++">Add 1</button>
 <p>Count is: {{ count }}</p>
 ```
@@ -33,7 +33,7 @@ function greet(event) {
 }
 ```
 
-```html
+```jsx | pure
 <!-- `greet` 是上面定义过的方法名 -->
 <button @click="greet">Greet</button>
 ```
@@ -46,7 +46,7 @@ function say(message) {
 }
 ```
 
-```html
+```jsx | pure
 <button @click="say('hello')">Say hello</button>
 <button @click="say('bye')">Say bye</button>
 ```
@@ -62,7 +62,7 @@ Vue 为 `v-on` 提供了**事件修饰符**。修饰符是用 `.` 表示的指�
 - `.once` // 事件最多被触发一次
 - `.passive`
 
-```html
+```jsx | pure
 <!-- 单击事件将停止传递 -->
 <a @click.stop="doThis"></a>
 
@@ -80,7 +80,7 @@ Vue 为 `v-on` 提供了**事件修饰符**。修饰符是用 `.` 表示的指�
 <div @click.self="doThat">...</div>
 ```
 
-```html
+```jsx | pure
 <!-- 添加事件监听器时，使用 `capture` 捕获模式 -->
 <!-- 例如：指向内部元素的事件，在被内部元素处理前，先被外部处理 -->
 <div @click.capture="doThis">...</div>
@@ -97,7 +97,7 @@ Vue 为 `v-on` 提供了**事件修饰符**。修饰符是用 `.` 表示的指�
 
 Vue 允许在 `v-on` 或 `@` 监听按键事件时添加按键修饰符。
 
-```html
+```jsx | pure
 <!-- 仅在 `key` 为 `Enter` 时调用 `submit` -->
 <input @keyup.enter="submit" />
 ```
@@ -123,7 +123,7 @@ Vue 为一些常用的按键提供了别名：
 - `.shift`
 - `.meta`
 
-```html
+```jsx | pure
 <!-- Alt + Enter -->
 <input @keyup.alt.enter="clear" />
 
@@ -133,7 +133,7 @@ Vue 为一些常用的按键提供了别名：
 
 ### **`.exact` 修饰符**
 
-```html
+```jsx | pure
 .exact 修饰符允许控制触发一个事件所需的确定组合的系统按键修饰符。
 
 template
@@ -192,7 +192,7 @@ template
 
 - **示例**
 
-  ```html
+  ```jsx | pure
   <!-- 方法处理函数 -->
   <button v-on:click="doThis"></button>
   
@@ -232,7 +232,7 @@ template
 
   监听子组件的自定义事件 (当子组件的“my-event”事件被触发，处理函数将被调用)：
 
-  ```html
+  ```jsx | pure
   <MyComponent @my-event="handleThis" />
   
   <!-- 内联声明 -->
@@ -272,7 +272,7 @@ template
 
 - **示例**
 
-  ```html
+  ```jsx | pure
   <!-- 绑定 attribute -->
   <img v-bind:src="imageSrc" />
   
@@ -312,7 +312,7 @@ template
 
   `.prop` 修饰符也有专门的缩写，`.`：
 
-  ```html
+  ```jsx | pure
   <div :someProperty.prop="someObject"></div>
   
   <!-- 等同于 -->
@@ -321,7 +321,7 @@ template
 
   当在 DOM 内模板使用 `.camel` 修饰符，可以驼峰化 `v-bind` attribute 的名称，例如 SVG `viewBox` attribute：
 
-  ```html
+  ```jsx | pure
   <svg :view-box.camel="viewBox"></svg>
   ```
 
@@ -367,7 +367,7 @@ template
 
 - **示例**
 
-  ```html
+  ```jsx | pure
   <!-- 具名插槽 -->
   <BaseLayout>
     <template v-slot:header>
@@ -412,7 +412,7 @@ template
 
   在随后的重新渲染，元素/组件及其所有子项将被当作静态内容并跳过渲染。这可以用来优化更新时的性能。
 
-  ```html
+  ```jsx | pure
   <!-- 单个元素 -->
   <span v-once>This will never change: {{msg}}</span>
   <!-- 带有子元素的元素 -->
@@ -443,7 +443,7 @@ template
 
   缓存一个模板的子树。在元素和组件上都可以使用。为了实现缓存，该指令需要传入一个固定长度的依赖值数组进行比较。如果数组里的每个值都与最后一次的渲染相同，那么整个子树的更新将被跳过。举例来说：
 
-  ```html
+  ```jsx | pure
   <div v-memo="[valueA, valueB]">
     ...
   </div>
@@ -457,7 +457,7 @@ template
 
   `v-memo` 仅用于性能至上场景中的微小优化，应该很少需要。最常见的情况可能是有助于渲染海量 `v-for` 列表 (长度超过 1000 的情况)：
 
-  ```html
+  ```jsx | pure
   <div v-for="item in list" :key="item.id" v-memo="[item.id === selected]">
     <p>ID: {{ item.id }} - selected: {{ item.id === selected }}</p>
     <p>...more child nodes</p>

@@ -41,7 +41,7 @@ border-radius: 50%;
 }
 ```
 
-```html
+```jsx | pure
 <div class="div2"></div>
 ```
 

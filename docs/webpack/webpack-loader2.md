@@ -14,7 +14,7 @@ order: 4
 
 > 解析 html 打包进入js文件中，img src 解析为模块导入。
 >
-> ```html
+> ```jsx | pure
 > <!DOCTYPE html>
 > <html lang="en">
 > <head>
@@ -65,7 +65,7 @@ module.exports = {
 
 **file.hbs**
 
-```html
+```jsx | pure
 <div>
   <p>{{firstname}} {{lastname}}</p>
   <img src="image.png" alt="alt" />
@@ -159,7 +159,7 @@ module.exports = {
 
 通过 `<!-- webpackIgnore: true -->` 注释，可以禁止处理下一个标签的源。
 
-```html
+```jsx | pure
 <!-- 禁止对 src 属性进行 url 处理 -->
 <!-- webpackIgnore: true -->
 <img src="image.png" />
@@ -228,7 +228,7 @@ module.exports = {
 
 **file.html**
 
-```html
+```jsx | pure
 <img src="image.jpg" data-src="image2x.png" />
 ```
 
@@ -246,7 +246,7 @@ require("html-loader!./file.html");
 
 **file.html**
 
-```html
+```jsx | pure
 <!DOCTYPE html>
 <html>
   <head>

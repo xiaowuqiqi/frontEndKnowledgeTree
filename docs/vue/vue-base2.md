@@ -10,7 +10,7 @@ nav: VUE框架
 
 使用构建步骤时，我们一般会将 Vue 组件定义在一个单独的 `.vue` 文件中，这被叫做[单文件组件](https://cn.vuejs.org/guide/scaling-up/sfc.html) (简称 SFC)：
 
-```html
+```jsx | pure
 <script setup>
 import { ref } from 'vue'
 
@@ -47,7 +47,7 @@ export default {
 
 选项式API，示例：
 
-```html
+```jsx | pure
 <template>
   <div @click="handleClick">
     {{ computedMessage }}
@@ -110,7 +110,7 @@ export default {
 
 在外部没有提供任何内容的情况下，可以为插槽指定默认内容。比如有这样一个 `<SubmitButton>` 组件：
 
-```html
+```jsx | pure
 <button type="submit">
   <slot></slot>
 </button>
@@ -118,7 +118,7 @@ export default {
 
 默认值：如果我们想在父组件没有提供任何插槽内容时在 `<button>` 内渲染“Submit”，只需要将“Submit”写在 `<slot>` 标签之间来作为默认内容
 
-```html
+```jsx | pure
 <button type="submit">
   <slot>
     Submit <!-- 默认内容 -->
@@ -128,7 +128,7 @@ export default {
 
 父级使用
 
-```html
+```jsx | pure
 <SubmitButton>Save</SubmitButton>
 ```
 
@@ -136,7 +136,7 @@ export default {
 
 有时在一个组件中包含多个插槽出口是很有用的。子级：
 
-```html
+```jsx | pure
 <div class="container">
   <header>
     <!-- 标题内容放这里 -->
@@ -152,7 +152,7 @@ export default {
 
 对于这种场景，`<slot>` 元素可以有一个**特殊的 attribute `name`**，用来给各个插槽分配唯一的 ID，以确定每一处要渲染的内容，**插槽组件：**
 
-```html
+```jsx | pure
 <div class="container">
   <header>
     <slot name="header"></slot>
@@ -170,7 +170,7 @@ export default {
 
 要为具名插槽传入内容，我们需要使用一个含 **`v-slot` 指令**的 `<template>` 元素，并将目标插槽的名字传给该指令：
 
-```html
+```jsx | pure
 <BaseLayout>
   <template v-slot:header>
     <!-- header 插槽的内容放这里 -->
@@ -182,7 +182,7 @@ export default {
 
 **调用插槽的组件：**
 
-```html
+```jsx | pure
 <BaseLayout>
   <template #header>
     <h1>Here might be a page title</h1>
@@ -201,7 +201,7 @@ export default {
 
 当一个组件同时接收默认插槽和具名插槽时，所有位于顶级的非 `<template>` 节点都被隐式地视为默认插槽的内容。所以上面也可以写成：
 
-```html
+```jsx | pure
 <BaseLayout>
   <template #header>
     <h1>Here might be a page title</h1>
@@ -219,7 +219,7 @@ export default {
 
 最终渲染出的 HTML 如下：
 
-```html
+```jsx | pure
 <div class="container">
   <header>
     <h1>Here might be a page title</h1>
@@ -238,7 +238,7 @@ export default {
 
 [动态指令参数](https://cn.vuejs.org/guide/essentials/template-syntax.html#dynamic-arguments)在 `v-slot` 上也是有效的，即可以定义下面这样的动态插槽名：
 
-```html
+```jsx | pure
 <base-layout>
   <template v-slot:[dynamicSlotName]>
     ...
@@ -272,7 +272,7 @@ export default {
 
 - **示例**
 
-  ```html
+  ```jsx | pure
   <script setup>
   import { ref, nextTick } from 'vue'
   

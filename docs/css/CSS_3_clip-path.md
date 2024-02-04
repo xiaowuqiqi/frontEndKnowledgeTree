@@ -267,7 +267,7 @@ clip-path: url(#myPath)
 ```
 
 假设下面的clipPath定义:
-```html
+```jsx | pure
 <svg>
   <clipPath id="myPath" clipPathUnits="objectBoundingBox">
     <path d="M0.5,1

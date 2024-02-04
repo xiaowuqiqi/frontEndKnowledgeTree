@@ -68,7 +68,7 @@ img{
 
 使用
 
-```html
+```jsx | pure
 <html>
 <head>
 <title>alpha效果展现：</title>  
@@ -314,7 +314,7 @@ SVG滤镜资源是指以xml文件格式定义的svg滤镜效果集，可以通�
 
  SVG文件
 
-```html
+```jsx | pure
 <svg version="1.1"
 xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -334,7 +334,7 @@ baseProfile="full">
 
 HTML代码
 
-```html
+```jsx | pure
 <div data-filter="image-svg-xml" class="svg-xml">
 	<h2>svg-xml</h2>
 	<img src="1.jpg">
