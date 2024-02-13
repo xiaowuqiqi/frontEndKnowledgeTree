@@ -46,8 +46,6 @@ class MyPlugin {
 module.exports = MyPlugin;
 ```
 
-
-
 ## hooks
 
 以下生命周期钩子函数，是由 `compiler` 暴露， 可以通过如下方式访问：
