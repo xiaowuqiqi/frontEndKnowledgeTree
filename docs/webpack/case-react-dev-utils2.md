@@ -2,7 +2,7 @@
 title: react-dev-utils详解2
 nav: webpack
 group:
-  title: 案例
+  title: react-scripts
   order: 5
 order: 2
 ---
