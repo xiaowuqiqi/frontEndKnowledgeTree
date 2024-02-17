@@ -2,13 +2,13 @@
 title: react-dev-utils详解1
 nav: webpack
 group:
-  title: 案例
+  title: react-scripts
   order: 5
 order: 1
 ---
 # react-dev-utils详解1
 
-reacte-scripts 很多功能都依赖了 react-dev-utils 包的方法，react-dev-utils 是对webpack配置的一些封装，它也可以单独使用，本章节主要介绍 react-dev-utils 包一些常见的方法。
+react-scripts 很多功能都依赖了 react-dev-utils 包的方法，react-dev-utils 是对webpack配置的一些封装，它也可以单独使用，本章节主要介绍 react-dev-utils 包一些常见的方法。
 
 react-dev-utils 没有单一的入口点。您只能导入各个顶层模块。
 
