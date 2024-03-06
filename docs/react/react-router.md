@@ -662,11 +662,13 @@ import React, {useCallback, useEffect, useMemo} from "react";
 import {Route, useParams, useSubmit, useLoaderData, Outlet} from 'react-router-dom'
 
 export default function ActionOrLoader() {
+  // 记得在渲染组件时使用 Outlet 组件，否则子组件不会渲染。
   return <div>
     数据存储层（store）
     <Outlet/>
   </div>
 }
+
 export const routes = [
   // children 路由中主要要有 index 路由
   // 数组中的路由主要有 key，可以直接设置为 path 对应值。
