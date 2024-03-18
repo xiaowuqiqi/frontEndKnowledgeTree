@@ -629,6 +629,10 @@ sudo netplan apply
 service sshd restart
 ```
 
+> 当使用虚拟机，碰到虚拟机内网络可以链接外部，但是外部不能ping通虚拟机，可以参考https://www.cnblogs.com/xixirang/p/17602903.html
+>
+> 设置勾选 wind10 网络配置中 VMnet8 的 VMware Bridge Protocol
+
 ## shell 常见指令
 
 ### if 判断

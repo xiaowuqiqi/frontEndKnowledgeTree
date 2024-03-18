@@ -383,12 +383,6 @@ function DeepComponent() {
 
 > 注意: element 中的数据是以元素方式传入（不是组件），所以**不会立即渲染**，只有 Route 匹配时才会渲染（例如这样 `{props.element}` 进行渲染 ）。
 
-
-
-
-
-
-
 ### history to useNavigate
 
 您还需要从 package.json 中删除 history 依赖项。history 库是 v6 的直接依赖项（而不是对等依赖项），因此您永远不会直接导入或使用它。相反，您将使用 useNavigate() 钩子进行所有导航。
@@ -823,6 +817,146 @@ function App() {
 }
 ```
 
+### lazy
+
+**如果不是数据路由（后裔路由和非数据路由）**
+
+如果不是数据路由（后裔路由和非数据路由）,我们应使用 react Suspense API 异步引入组件。
+
+```jsx | pure
+import React from 'react';
+import {Route, Routes, Navigate} from "react-router-dom";
+import {Loading} from '@microup/utils';
+import {ErrorBoundary} from "react-error-boundary";
+
+export const asyncLazy = (
+  importFn,
+  props,
+  fallback = <Loading/>,
+  ErrorComponent = <Empty/>
+) => {
+  const routeUndefined = (error) => {
+    console.error(`route undefined:${error}`)
+    return <Navigate to="/undefined"/>
+  }
+  if (!importFn) return routeUndefined('route path 为空，无对应页面')
+  const LazyEle = React.lazy(importFn);
+  if (!LazyEle) return routeUndefined(`route path 错误，无对应页面`)
+  return (
+    <ErrorBoundary fallback={ErrorComponent}>
+      <React.Suspense fallback={fallback}>
+        <LazyEle {...props}/>
+      </React.Suspense>
+    </ErrorBoundary>
+  )
+}
+export default (props) => {
+  return (
+    <Routes>
+      <Route index element={asyncLazy(()=>import('./Page1'))}/>
+      <Route path={`page1/*`} element={asyncLazy(()=>import('./Page1'))}/>
+    </Routes>
+  )
+};
+```
+
+**如果是数据路由**
+
+为了让你的应用包更小，并支持**对路由**进行**代码拆分**，**匹配已知路由后**执行懒加载路由函数。
+
+```jsx | pure
+let routes = createRoutesFromElements(
+  <Route path="/" element={<Layout />}>
+    <Route path="a" lazy={() => import("./a")} />
+    <Route path="b" lazy={() => import("./b")} />
+  </Route>
+);
+```
+
+需要注意的是 **lazy** 引入的组件，**必须实现 Component 属性**。
+
+```jsx | pure
+import { useLoaderData } from "react-router-dom";
+
+export async function loader() {
+  await new Promise((r) => setTimeout(r, 500));
+  return "I came from the About.tsx loader function!";
+}
+
+export function Component() {
+  let data = useLoaderData() as string;
+
+  return (
+    <div>
+      <h2>About</h2>
+      <p>{data}</p>
+    </div>
+  );
+}
+
+Component.displayName = "AboutPage";
+```
+
+当然也可以这样引入
+
+```jsx | pure
+  <Route
+    path='lazy-test'
+    lazy={async () => {
+      let LazyTest = await import("./LazyTest");
+      return {Component: LazyTest.default};
+    }}
+  />
+```
+
+静态定义`loader`/ `action`，那么它将与该函数并行调用`lazy`。如果您有不介意关键捆绑包的小型加载程序，并且希望在组件下载的同时启动其数据获取，那么这非常有用。
+
+```js
+let route = {
+  path: "projects",
+  async loader({ request, params }) {
+    let { loader } = await import("./projects-loader");
+    return loader({ request, params });
+  },
+  lazy: () => import("./projects-component"),
+};
+```
+
+ 单个文件中的多个路由
+
+```js
+// Assume pages/Dashboard.jsx has all of our loaders/components for multiple
+// dashboard routes
+let dashboardRoute = {
+  path: "dashboard",
+  async lazy() {
+    let { Layout } = await import("./pages/Dashboard");
+    return { Component: Layout };
+  },
+  children: [
+    {
+      index: true,
+      async lazy() {
+        let { Index } = await import("./pages/Dashboard");
+        return { Component: Index };
+      },
+    },
+    {
+      path: "messages",
+      async lazy() {
+        let { messagesLoader, Messages } = await import(
+          "./pages/Dashboard"
+        );
+        return {
+          loader: messagesLoader,
+          Component: Messages,
+        };
+      },
+    },
+  ],
+};
+```
+
 ## 备注
 
 ### 错误：出现 `useContext` 或 `useRef` 找不到的错误。
@@ -894,6 +1028,6 @@ function User(props) {
 
 使用 Routes 组件时一般都是在后裔路由中使用。
 
-使用**后裔路由**时，注意**不可以**使用 **loader** 和 **action** 属性，也不可以使用 **useSubmit** Hook。
+使用**后裔路由**时，注意**不可以**使用 **loader**、**lazy**、**ErrorBoundary** 和 **action** 属性，也不可以使用 **useSubmit** Hook。
 
 参考：https://segmentfault.com/q/1010000043580625

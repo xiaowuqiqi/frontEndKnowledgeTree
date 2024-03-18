@@ -560,6 +560,20 @@ output.pathinfo = false
 
    这里，所有的资源将通过指定的 CDN 路径加载。例如，一个导入的 `image.jpg` 将会从 `https://cdn.example.com/image_hash.jpg` 被加载。
 
+注意的是，publicPath 可以设置 **auto** 值，在请求静态资源文件时，会拼接 url 后缀进行请求。例如url 为 https://xiaowu77.com/a/b/c。而请求 main.11dfw1.js 时的路径为 https://xiaowu77.com/a/b/main.11dfw1.js。
+
+所以在微前端构建中，开发环境使用 auto 时，路由选用建议用 **hash 路由**。
+
+另一个特点是，在**微前端**中，当 remote 模块设置 **auto** 值，会根据请求地址前缀进行 `__webpack_public_path__` 的赋值，优先使用 remote 模块自己的地址（importManifest.js的前缀路径）
+
+例如 host 模块在本地，请求线上的 remote 模块。
+
+![image-20240318091023110](./webpack-output.assets/image-20240318091023110.png)
+
+我们发现它变更了路径前缀：
+
+![image-20240318091038662](./webpack-output.assets/image-20240318091038662.png)
+
 ## scriptType
 
 这个配置项允许使用自定义 script 类型加载异步 chunk，例如 `<script type="module" ...>`。

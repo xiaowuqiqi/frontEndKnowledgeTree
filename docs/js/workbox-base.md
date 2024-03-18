@@ -325,7 +325,7 @@ self.addEventListener('install', event => {
 ```js
 import {pageCache} from 'workbox-recipes';
 
-pageCache(warmCache: ['/index.html', '/styles/main.css']);
+pageCache({warmCache: ['/index.html', '/styles/main.css']});
 ```
 
 **模式**

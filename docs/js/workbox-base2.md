@@ -474,3 +474,34 @@ const response = await matchPrecache('/precached-file.html');
 
 > **注意**：如果您[使用自己的 `PrecacheController` 实例](https://developer.chrome.com/docs/workbox/reference/workbox-precaching?hl=zh-cn#using_precachecontroller_directly)，而不是通过 `precacheAndRoute` 使用默认实例，您应直接在该实例上调用 [`matchPrecache()`](https://developer.chrome.com/docs/workbox/modules/workbox-precaching?hl=zh-cn#method-matchPrecache) 或 [`getCacheKeyForURL()`](https://developer.chrome.com/docs/workbox/modules/workbox-precaching?hl=zh-cn#method-getCacheKeyForURL) 方法。
 
+## createHandlerBoundToURL
+
+返回一个函数，该函数在预缓存中查找 `url`（考虑修订信息），并返回相应的 `Response`。
+
+案例，如果是 html 的请求，直接从缓存中查找数据并返回。
+
+```js
+registerRoute(
+// Return false to exempt requests from being fulfilled by index.html.
+// 返回false以免除通过index.html来满足请求。
+({ request, url }) => {
+  // If this isn't a navigation, skip.
+  // 如果这不是一个导航请求，则跳过。
+    if (request.mode !== 'navigate') {
+      return false;
+    } // 如果URL以/_开头，跳过。
+
+    if (url.pathname.startsWith('/_')) {
+      return false;
+    } // If this looks like a URL for a resource, because it contains // a file extension, skip.
+      // 如果这看起来像资源的URL，因为它包含//文件扩展名，请跳过。
+    if (url.pathname.match(fileExtensionRegexp)) {
+      return false;
+    } // Return true to signal that we want to use the handler.
+      // 返回true以表示我们想要使用该处理程序。
+
+    return true;
+  },
+  createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
+);
+```
