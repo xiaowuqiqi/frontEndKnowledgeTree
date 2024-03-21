@@ -1,11 +1,11 @@
 ---
-title: nexus 3
-order: 1
+title: Nexus 3
+order: 3
 group:
   title: 运维相关
   order: 8
 ---
-# nexus 3
+# Nexus 3
 
 Sonatype Nexus 3 软件仓库服务器，它既是一个私有软件仓库服务器，又可以作为代理和缓存服务器从公共的软件仓库获取内容，官网在 https://www.sonatype.com/products/nexus-repository 。
 
