@@ -1,6 +1,6 @@
 ---
-title: 常见配置与参数
-  order: 3
+title: Git 常见配置与参数
+order: 3
 group:
   order: 3
   title: Git 学习

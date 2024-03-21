@@ -1,6 +1,6 @@
 ---
-title: git 指令学习
-  order: 2
+title: Git 指令学习
+order: 2
 group:
   order: 3
   title: Git 学习

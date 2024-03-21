@@ -1,6 +1,6 @@
 ---
-title: git 基础与概念
-  order: 1
+title: Git 基础与概念
+order: 1
 group:
   order: 3
   title: Git 学习
