@@ -89,7 +89,7 @@ animation: name duration timing-function delay iteration-count direction fill-mo
 
 - `cubic-bezier(n,n,n,n)` 在 cubic-bezier 函数中定义自己的值。可能的值是 0 至 1 之间的数值。
 
-  调试一下：https://xiaowuqiqi.github.io/cubic-bezier-view/cubic-bezier
+  调试一下：https://xiaowuqiqi.github.io/cubic-bezier-view-chinese/cubic-bezier
 
 ### animation-delay *
 
@@ -571,7 +571,7 @@ transition-property: none|all|property;
 
 - cubic-bezier(n,n,n,n) 在 cubic-bezier 函数中定义自己的值。可能的值是 0 至 1 之间的数值。
 
-  调试一下：https://xiaowuqiqi.github.io/cubic-bezier-view/cubic-bezier
+  调试一下：https://xiaowuqiqi.github.io/cubic-bezier-view-chinese/cubic-bezier
 
 **transition-delay**
 
