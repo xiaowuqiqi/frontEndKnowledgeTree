@@ -3,7 +3,7 @@ title: Ubuntu补充
 order: 3
 nav: 
   order: 7
-  title: 运维相关
+  title: 运维与杂项
 group:
   order: 1
   title: Ubuntu指令
