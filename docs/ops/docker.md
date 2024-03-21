@@ -371,7 +371,7 @@ docker search nginx
 
 如果没有设置 tag ，会默认加上 latest 作为 tag 寻找。
 
-![](F:/视频/k8s/Dorker专讲/images/run容器流程图.jpg)
+![image-20240321112034160](./docker.assets/image-20240321112034160.png)
 
 
 
