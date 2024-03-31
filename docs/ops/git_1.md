@@ -58,9 +58,13 @@ $ git commit -a -m [ADD]abc # 如果 -m 信息没有空格，可以直接写，�
 
 # 提交时显示所有diff信息
 $ git commit -v
-
-
 ```
+
+注意的是：在使用 git commit -v 时，他比较的暂存区和最新commit的内容。
+
+有点类似于 git diff --staged 功能，但是他会进入 vim 编辑器中。
+
+进入vim编辑器中后，使用 :wq 保存并提交。使用 :q! 退出不提交。
 
 ### 修改上次 commit
 
@@ -87,7 +91,10 @@ $ git branch -r
 # 列出所有本地分支和远程分支
 $ git branch -a
 
-
+# 查看一个 commit 所在的所有分支
+$ git branch --contains [commit-hash]
+$ git branch --contains [commit-hash] -a #所有远程和本地分支
+$ git branch --contains [commit-hash] -r #所有远程
 ```
 
 ### 新建分支
@@ -115,16 +122,16 @@ $ git checkout -
 # 新建一个分支，指向指定commit
 $ git branch [branch] [commit]
 
-# 新建一个分支，与指定的远程分支建立追踪关系
+# 新建一个分支，与指定的远程分支建立追踪关系(这里远程分支建议 remotes/origin/tt1 形式)
 $ git branch --track [branch] [remote-branch]
 
-# 建立追踪关系，在现有分支与指定的远程分支之间
-$ git branch --set-upstream [branch] [remote-branch]
+# 建立或修改追踪关系，在现有分支与指定的远程分支之间
+$ git branch --set-upstream-to [remote-branch]
 ```
 
-注意区分，**`--set-upstream`** 选项用于将**当前分支**与指定的**远程分支关联**，而 **`--track`** 选项用于**创建**新的**本地分支**并指定其跟踪的**远程分支**。
+注意区分，**`--set-upstream-to`** 选项用于将**当前分支**与指定的**远程分支关联**，而 **`--track`** 选项用于**创建**新的**本地分支**并指定其跟踪的**远程分支**。
 
-其中 **`--set-upstream`**  可以**简写为 -u**。所以也可以：
+其中 **`--set-upstream-to`**  可以**简写为 -u**。所以也可以：
 
 ```bash
 # 把本地内容推送到远程指定分支
@@ -140,9 +147,13 @@ $ git branch -d [branch-name]
 $ git branch -D dev20181018
 
 # 删除远程分支
-$ git push origin --delete [branch-name]
 $ git branch -dr [remote/branch] # 删除本地远程分支
+$ git push origin --delete [branch-name] 
 ```
+
+注意，删除远程分支时，需要先删除本地远程分支，例如 `git branch -dr origin/tt2` 。然后删除远程分支，例如 ` git push origin --delete tt2` 。
+
+注意 **--delete branch-name** ，这里 branch-name 是**本地分支名字**，**没有 origin/** 。另外 --delete tt2 可以用 :tt2 替代，**冒号代表删除**。
 
 ### 合并分支
 
@@ -194,19 +205,17 @@ git cherry-pick C D E
 
 要查找提交（commit），您可以使用 `git log` 命令。这个命令会显示当前分支的提交历史。以下是一些常用的 `git log` 选项，您可以根据自己的需求进行调整：
 
-1. **查看全部提交记录**：
+1. **查看全部提交记录**：（当前分支）
 
-   ```
-   bashCopy code
+   ```bash
    git log
    ```
 
    这将显示当前分支的所有提交记录，从最新的提交到最旧的提交。
 
-2. **限制提交数**：
+2. **限制提交数**：（当前分支）
 
-   ```
-   bashCopy code
+   ```bash
    git log -n <number>
    ```
 
@@ -214,8 +223,7 @@ git cherry-pick C D E
 
 3. **查看提交的详细信息**：
 
-   ```
-   bashCopy code
+   ```bash
    git log -p
    ```
 
@@ -223,8 +231,7 @@ git cherry-pick C D E
 
 4. **查看指定文件的提交记录**：
 
-   ```
-   bashCopy code
+   ```bash
    git log <file>
    ```
 
@@ -232,8 +239,7 @@ git cherry-pick C D E
 
 5. **按作者查找提交记录**：
 
-   ```
-   luaCopy code
+   ```bash
    git log --author=<author>
    ```
 
@@ -241,8 +247,7 @@ git cherry-pick C D E
 
 6. **按日期范围查找提交记录**：
 
-   ```
-   bashCopy code
+   ```bash
    git log --since=<date> --until=<date>
    ```
 
@@ -250,8 +255,7 @@ git cherry-pick C D E
 
 7. **按提交消息查找提交记录**：
 
-   ```
-   luaCopy code
+   ```bash
    git log --grep=<pattern>
    ```
 
@@ -259,18 +263,33 @@ git cherry-pick C D E
 
 8. **按提交哈希值查找提交记录**：
 
-   ```
-   bashCopy code
+   ```bash
    git log <commit-hash>
    ```
+   这将显示从指定提交到最新提交的所有提交记录。 
 
-   这将显示从指定提交到最新提交的所有提交记录。
+9. 查看两个分支 commit 的差别
+
+   ```bash
+   git log dev ^master # 查看 dev 有，而 master 中没有的。
+   	
+   git log master..dev # 不知道谁提交的多谁提交的少，单纯想知道有什么不一样。
+   
+   git log --left-right dev...master # 在上述情况下，再显示出每个提交是在哪个分支上。
+   ```
 
 除了 `git log`，您还可以使用其他命令和选项来查找提交，例如 `git show` 可以显示单个提交的详细信息，`git reflog` 可以显示引用日志，其中包含了项目中的所有引用（分支和标签）的历史记录。
 
 ## fetch
 
 Fetch 命令从远程仓库获取更新，但不会自动合并到本地分支。它只是将远程分支的内容下载到本地，并更新相应的远程跟踪分支（remote tracking branch）。
+
+```bash
+`git fetch [<options>] [<repository> [<refspec>…]]`
+`git fetch [<options>] <group>`
+`git fetch --multiple [<options>] [(<repository> | <group>)…]`
+`git fetch --all [<options>]`
+```
 
 案例，下边是 webstorm 拉取代码时的指令
 
@@ -376,16 +395,22 @@ git config --global user.email "ZHAN.WU@hand-china.com"
 
 ```bash
 ### stash存储缓存区
-# 储藏当前暂存的文件
-git stash 
+
 # 储藏列表
 git stash list 
 # 应用某次储藏(不会删除那一次)（弹出的内容会到工作区中，没有 add）
-git stash apply stash@{0} 
+git stash apply 'stash@{0}'
 # 应用并弹出栈顶的储藏（弹出的内容会到工作区中，没有 add）
 git stash pop 
+# 删除一个stash
+git stash drop 'stash@{0}''
+# 储藏当前内容（会缓存工作区和暂存区的内容，然后工作区暂存区的内容会删除）
+git stash 
 # 提交储藏信息（会缓存工作区和暂存区的内容，然后工作区暂存区的内容会删除）
-git stash save “测试储藏” 
+git stash save '测试储藏'
+# 查看内容
+git stash show # 查看所有的 stash 对那些文件的修改。
+git stash show 'stash@{0}' -p # 查看单独一个 stash 详细修改了那些内容。
 # 查看git状态
 git status 
 ```
@@ -447,7 +472,7 @@ git diff
 查看**缓存区**和最近一次 **commit** 的差异内容。（相比下缓存区做了那些新操作）
 
 ```bash
-git diff --staged
+git diff --staged # 用于查看缓存区是否有内容，就是 add . 的内容。重要
 ```
 
 > 命令行中按 q 返回，不在继续查看。
@@ -489,6 +514,8 @@ $ git show [commit]:[filename]
 
 ### 查看文件由谁修改过。
 
+查看文件修改的记录，精确到每行，类似 webstorm 右键追溯注释
+
 ```bash
 git blame XXXX //xxx代表文件路径
 ```
@@ -500,9 +527,9 @@ git blame XXXX //xxx代表文件路径
 ### 查看commit提交记录
 
 ```bash
-# 打印所有commit提交记录
+# 显示当前分支的commit提交
 git log
-# 显示当前分支的最近几次提交
+# 显示到目前为止所做的操作(缩略显示，显示你输入了那些指令)
 git reflog
 ```
 
@@ -539,12 +566,34 @@ git show xxx
 
 ## 退回版本
 
+### reset
+
+![image-20240323225656200](./git_1.assets/image-20240323225656200.png)
+
+是将之前的提交记录全部抹去，将 HEAD 指向自己重置的提交记录，对应的提交记录都不复存在；
+
 ```bash
 #退回最近两个版本
 git reset --hard HEAD^^
 git reset --hard HEAD~2
 
 #退回某次操作
-git reset --hard 1f4e702
+git reset --hard 1f4e702 # 这里的 hash 对应的 commit 不会回退
+
+git reset --hard # 回退到某个版本,commit回退，内容同时删除（包括正在开发的代码）（相当于 --staged --worktree）
+git reset --soft # 回退到某个版本,commit回退，但是内容会保留在缓冲区，可以直接commit重新提交
 ```
 
+### revert
+
+![image-20240323225624137](./git_1.assets/image-20240323225624137.png)
+
+操作是将选择的某一次提交记录 重做，若之后又有提交，提交记录还存在，只是将指定提交的代码给清除掉。
+
+![image-20240323225228585](./git_1.assets/image-20240323225228585.png)
+
+```bash
+git revert commitHash
+```
+
+注意的是，如果要隔着几个 commit 然后 revert ，他会直接恢复到对应 commit 当时文件内容的状态。容易产生冲突。

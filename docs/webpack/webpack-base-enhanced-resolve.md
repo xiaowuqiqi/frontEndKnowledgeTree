@@ -34,23 +34,33 @@ yarn test
 提供同步和异步的 API。`create` 方法允许创建一个自定义解析函数。
 
 > resolve 方法接收三个参数，path 、request 、callback
+>
+> 其中 **path** 是**基础路径**，在 **request 不是绝对路径**的情况下会**与 path 拼接**，如果要引入 node_modules 内包时，会从 path 路径向上查找 node_modules 包。
+>
+> **request** 是**请求路径**，可以传入相对路径，会与 path 拼接，也可以传入绝对路径，path 则不在起作用。最后注意的是 request **必须传入文件路径**，**不能是目录路径**。
+>
+> **callback** 是异步请求的回调，返回查找的路径。 
+>
+> 最终，如果找到文件则返回路径，如果没有找到，则报错。
 
 ```js
 const resolve = require("enhanced-resolve");
 
+// 异步加载模块
 resolve("/some/path/to/folder", "module/dir", (err, result) => {
 	result; // === "/some/path/node_modules/module/dir/index.js"
 });
 
+// 同步加载模块
 resolve.sync("/some/path/to/folder", "../../dir");
 // === "/some/path/dir/index.js"
 
+// 创建一个 resolve 实例，用于异步加载
 const myResolve = resolve.create({
 	// 或者使用 resolve.create.sync
 	extensions: [".ts", ".js"]
 	// 查看下面更多的选项
 });
-
 myResolve("/some/path/to/folder", "ts-module", (err, result) => {
 	result; // === "/some/node_modules/ts-module/index.ts"
 });
@@ -66,7 +76,7 @@ const { CachedInputFileSystem, ResolverFactory } = require("enhanced-resolve");
 
 // 创建一个解析器
 const myResolver = ResolverFactory.createResolver({
-	// 典型的用法将消耗 `fs` + `CachedInputFileSystem`，它包装了 Node.js `fs` 来添加缓存。
+	// 典型的用法，将消耗 `fs` + `CachedInputFileSystem`，它包装了 Node.js `fs` 来添加缓存。
 	fileSystem: new CachedInputFileSystem(fs, 4000),
 	extensions: [".js", ".json"]
 	/* 这里还有其他解析器选项。可以在下面看到选项/默认值 */
@@ -215,8 +225,6 @@ resolver.resolveSync(
 
 上述出现 **main** 只是常用默认值，可以通过 **mainFields** 另外设置。
 
-
-
 **useSyncFileSystemCalls: true**，设为true，对 resolver 使用**同步文件**系统调用。
 
 表示Webpack会使用同步的文件系统调用。这意味着在解析模块等文件系统操作时，Webpack将**等待文件系统返回结果**后再继续执行。这可能会**影响构建性能**，尤其是在大型项目中。
@@ -302,6 +310,42 @@ resolve: {
 },
 ```
 
+## 案例
+
+![image-20240331141955847](./webpack-base-enhanced-resolve.assets/image-20240331141955847.png)
+
+```js
+const resolve = require('enhanced-resolve');
+const path = require('node:path');
+
+const dirPath = path.join(__dirname)
+const studyPath = path.join(__dirname, '../')
+const nodetestPath = path.join(__dirname, '../../')
+const resolveSync = resolve.create.sync({
+  extensions: [".js", ".json", ".node"],
+  alias: {
+    '@dir': dirPath,
+    '@study': studyPath
+  }
+})
+console.log(dirPath) // ……\nodetest\study\path // 当前文件位置
+let data = resolveSync(studyPath, 'path-key') // 以 studyPath 为基础查找 path-key 外部包
+// ……\nodetest\node_modules\path-key\index.js
+console.log(data)
+data = resolveSync(dirPath, 'path-key') // 以 dirPath 为基础查找 path-key 外部包
+// ……\nodetest\study\path\node_modules\path-key\index.js
+console.log(data)
+data = resolveSync(dirPath, path.join(studyPath,'fs/promise/test')) // request 传入绝对路径，path 不再起作用。
+console.log(data)
+// ……\nodetest\study\fs\promise\test
+data = resolveSync(dirPath, '../fs/promise/test')// request 传入相对路径，path 用于拼接。
+console.log(data)
+// ……\nodetest\study\fs\promise\test
+data = resolveSync(dirPath, '@study/fs/promise/test')// 使用别名
+console.log(data)
+// ……\nodetest\study\fs\promise\test
+```
+
 ## 源码部分分析
 
 ### index
@@ -318,9 +362,11 @@ resolve.create.sync()
 
 #### create
 
-create 本质是 create 方法。
+**create 本质是 create 方法。**
 
-create.sync 本质是 createSync 方法。
+**create.sync 本质是 createSync 方法。**
+
+**方法作用**是用 enhanced-resolve 默认**封装好的 Resolver 实例**，**允许**添**加**一下额外 **options 配置**。（所以这个方式比较常用）
 
 他们处理入参，添加 useSyncFileSystemCalls 和 fileSystem 文件系统相关属性，以及context 属性的默认参数。
 
@@ -341,6 +387,7 @@ function createSync(options) {
 	};
 	const resolver = ResolverFactory.createResolver(options);
 	return function (context, path, request) {
+        // 如果 context 为 string ，说明第一个参数为 path 第二参数为 request
 		if (typeof context === "string") {
 			request = path;
 			path = context;
@@ -353,9 +400,11 @@ function createSync(options) {
 
 #### resolve
 
-resolve  本质是 resolve 方法。
+**resolve  本质是 resolve 方法。**
 
-resolve.sync 本质是 resolveSync 方法。
+**resolve.sync 本质是 resolveSync 方法。**
+
+**方法作用**是用 enhanced-resolve 默认**封装好的 Resolver 实例**，**不允许**添**加**一下额外 **options 配置**。
 
 他们同上边create相比会闭包保存 ResolverFactory.createResolver 的实例，同时添加 conditionNames 和 extensions 的默认配置。
 
@@ -375,7 +424,7 @@ const asyncResolver = ResolverFactory.createResolver({
 });
 
 function resolve(context, path, request, resolveContext, callback) {
- if (typeof context === "string") {
+ if (typeof context === "string") { // 如果 context 为 string ，则第一个参数为 path ，第二个参数为 request ，第三个参数为 resolveContext 第四个参数为 callback
   callback = resolveContext;
   resolveContext = request;
   request = path;
@@ -393,7 +442,7 @@ function resolve(context, path, request, resolveContext, callback) {
 
 #### createResolve
 
-最重要的方法 createResolver 用于注册多个 hook ，注入系统内的一些 plugin ，然后创建 Resolver 实例。
+最重要的方法 createResolver 用于**注册多个 hook** ，**注入系统内的一些 plugin** ，然后**创建 Resolver 实例**。
 
 ```js
 exports.createResolver = function (options) {
