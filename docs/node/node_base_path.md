@@ -1,6 +1,6 @@
 ---
 title: path&require
-nav: node
+nav: Node
 group:
   title: node笔记
   order: 0

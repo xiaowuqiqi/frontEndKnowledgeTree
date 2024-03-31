@@ -1,6 +1,6 @@
 ---
 title: node 引用包整理
-nav: node
+nav: Node
 group:
   title: node笔记
   order: 0

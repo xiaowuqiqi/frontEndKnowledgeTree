@@ -1,6 +1,6 @@
 ---
 title: stream-自定义与实现
-nav: node
+nav: Node
 group:
   title: node笔记
   order: 0
