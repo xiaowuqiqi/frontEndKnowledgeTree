@@ -365,6 +365,8 @@ reader.unpipe(writer);
 > `writable.uncork()` 会将它们全部传给 `writable._writev()`。
 
 > 这可以**防止**在等待处理**第一个小块**时正在**缓冲数据**的**行头阻塞**情况。但是，在不实现 `writable._writev()` 的情况下使用 `writable.cork()` 可能会对吞吐量产生不利影响。
+>
+> 注意，因为 每次调用 write 方法都会触发一次 _write，所以**小块数据**时，**可以使用 cork 加 _writev 实现**。
 
 ### destroy()
 

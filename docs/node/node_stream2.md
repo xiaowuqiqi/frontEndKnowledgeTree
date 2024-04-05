@@ -17,7 +17,7 @@ order: 6
 new stream.Writable([options])
 /**
 option
-	shighWaterMark <number> stream.write() 开始返回 false 时的缓冲级别。
+	highWaterMark <number> stream.write() 开始返回 false 时的缓冲级别。
 		默认值：16384 (16 KiB)，或 16 用于 objectMode 流。
 	decodeStrings <boolean> 是否将传递给 stream.write() 的 string 编码为 Buffer
 		（使用 stream.write() 调用中指定的编码），然后再将它们传递给 stream._write()。

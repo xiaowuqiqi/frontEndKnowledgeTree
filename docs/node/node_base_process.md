@@ -352,6 +352,56 @@ var {promisify} = require('./util/promiseify.js');
 var main = require('./util/promiseify.js');
 ```
 
+### 启用ES模块
+
+Node.js 有两个模块系统：[CommonJS](https://nodejs.cn/api/modules.html) 模块和 ECMAScript 模块。
+
+可以**通过 `.mjs` 文件扩展名开启**。
+
+**设置 `package.json` 的 [`"type"`](https://nodejs.cn/api/packages.html#type) 字段为 `"module"` 。**
+
+在 node 指令执行代码时，**设置 [`--input-type=module`](https://nodejs.cn/api/cli.html#--input-typetype)** 开启ES模块模式。
+
+当代码缺少任一模块系统的显式标记时，Node.js 将**检查模块**的源代码以查找 ES 模块语法。如果找到这样的语法，Node.js 会将代码作为 ES 模块运行
+
+### ES 模块和 CommonJS 的区别
+
+**ES 模块无 `require`、`exports` 或 `module.exports`**
+
+在大多数情况下，**可以使用** ES 模块 **`import` 加载 CommonJS 模块。**
+
+> 如果需要，可以使用 [`module.createRequire()`](https://nodejs.cn/api/module.html#modulecreaterequirefilename) 在 ES 模块中构造 `require` 函数。
+
+**ES 模块无 `__filename` 或 `__dirname`** 这些 CommonJS 变量在 ES 模块中不可用。
+
+`__filename` 和 `__dirname` 用例可以**通过 `import.meta.filename` 和 `import.meta.dirname` 赋值**。（新增于: v20.11.0）
+
+**ES 模块没有插件加载**
+
+[插件](https://nodejs.cn/api/addons.html) 当前不支持 ES 模块导入。
+
+它们可以改为加载 [`module.createRequire()`](https://nodejs.cn/api/module.html#modulecreaterequirefilename) 或 [`process.dlopen`](https://nodejs.cn/api/process.html#processdlopenmodule-filename-flags)。
+
+**ES 模块没有 `require.resolve`**
+
+相对解析可以通过 `new URL('./local', import.meta.url)` 处理。
+
+对于完整的 `require.resolve` 替代品，**有 [import.meta.resolve](https://nodejs.cn/api/esm.html#importmetaresolvespecifier) API。**
+
+也可以使用 `module.createRequire()`。
+
+**没有 `NODE_PATH`**
+
+`NODE_PATH` 不是解析 `import` 说明符的一部分。如果需要这种行为，则使用符号链接。
+
+**没有 `require.extensions`**
+
+`require.extensions` 没有被 `import` 使用。模块定制钩子可以提供替代品。
+
+**没有 `require.cache`**
+
+`require.cache` 没有被 `import` 使用，因为 ES 模块加载器有自己独立的缓存。
+
 ### isBuiltin()
 
 如果模块是内置的，则返回 true，否则返回 false
