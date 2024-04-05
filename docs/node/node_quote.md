@@ -1,5 +1,5 @@
 ---
-title: node 引用包整理
+title: node 其他
 nav: Node
 group:
   title: node笔记
