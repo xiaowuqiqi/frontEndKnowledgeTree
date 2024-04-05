@@ -1,7 +1,7 @@
 ---
 title: vue事件与指令
 order: 3
-nav: VUE框架
+nav: VUE
 ---
 
 ## 事件处理

@@ -1,7 +1,7 @@
 ---
 title: KeepAlive组件缓存
 order: 8
-nav: VUE框架
+nav: VUE
 ---
 
 # KeepAlive组件缓存

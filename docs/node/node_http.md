@@ -1,5 +1,5 @@
 ---
-title: HTTP-server&基础
+title: http-server&基础
 nav: Node
 group:
   title: node笔记
@@ -7,7 +7,7 @@ group:
 order: 7
 ---
 
-# node 笔记-HTTP-server&基础
+# node 笔记-http-server&基础
 
 ![image-20240321114810620](./node学习.assets/image-20240321114810620.png)
 

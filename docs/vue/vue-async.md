@@ -1,7 +1,7 @@
 ---
 title: 异步组件
 order: 7
-nav: VUE框架
+nav: VUE
 ---
 
 # 异步组件

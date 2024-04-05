@@ -1,7 +1,7 @@
 ---
 title: vue基础其他
 order: 2
-nav: VUE框架
+nav: VUE
 ---
 
 ## 组件定义

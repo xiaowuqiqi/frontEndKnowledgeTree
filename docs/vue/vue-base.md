@@ -1,7 +1,7 @@
 ---
 title: vue基础
 order: 1
-nav: VUE框架
+nav: VUE
 ---
 
 ## 响应式基础

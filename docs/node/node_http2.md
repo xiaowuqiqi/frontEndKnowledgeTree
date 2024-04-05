@@ -1,5 +1,5 @@
 ---
-title: HTTP-res&req
+title: http-res&req
 nav: Node
 group:
   title: node笔记
@@ -7,7 +7,7 @@ group:
 order: 8
 ---
 
-# node 笔记-HTTP-res&req
+# node 笔记-http-res&req
 
 ![image-20240321114810620](./node学习.assets/image-20240321114810620.png)
 

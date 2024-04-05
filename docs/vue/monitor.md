@@ -1,7 +1,7 @@
 ---
 title: vue监听器与生命周期
 order: 3
-nav: VUE框架
+nav: VUE
 ---
 
 ## 监听器
