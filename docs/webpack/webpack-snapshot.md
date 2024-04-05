@@ -1,6 +1,6 @@
 ---
 title: snapshot 缓存
-nav: webpack
+nav: Webpack
 group:
   title: 基础
   order: 0

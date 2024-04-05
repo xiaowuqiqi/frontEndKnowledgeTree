@@ -1,6 +1,6 @@
 ---
 title: splitChunks
-nav: webpack
+nav: Webpack
 group:
   title: optimization
   order: 1

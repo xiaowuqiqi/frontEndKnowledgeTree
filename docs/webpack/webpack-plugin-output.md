@@ -1,5 +1,5 @@
 ---
-nav: webpack
+nav: Webpack
 title: assets-webpack-plugin
 group:
   title: plugin

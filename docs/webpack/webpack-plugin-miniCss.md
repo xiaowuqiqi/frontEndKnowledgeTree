@@ -1,5 +1,5 @@
 ---
-nav: webpack
+nav: Webpack
 title: mini-css-extract-plugin
 group:
   title: plugin

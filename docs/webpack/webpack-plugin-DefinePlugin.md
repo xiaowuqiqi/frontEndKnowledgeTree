@@ -1,6 +1,6 @@
 ---
 title: DefinePlugin
-nav: webpack
+nav: Webpack
 group:
   title: plugin
   order: 5

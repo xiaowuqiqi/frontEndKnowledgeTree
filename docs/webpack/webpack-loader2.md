@@ -1,6 +1,6 @@
 ---
 title: 其他 Loader
-nav: webpack
+nav: Webpack
 group:
   title: loader
   order: 3

@@ -1,6 +1,6 @@
 ---
 title: html-webpack-plugin
-nav: webpack
+nav: Webpack
 group:
   title: plugin
   order: 4

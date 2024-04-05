@@ -1,6 +1,6 @@
 ---
 title: Css Laoder
-nav: webpack
+nav: Webpack
 group:
   title: loader
   order: 3
