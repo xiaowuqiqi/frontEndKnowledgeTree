@@ -1,6 +1,8 @@
 ---
 title: 动态规划
-group: 4_算法基础
+group:
+  order: 3
+  title: 算法基础
 order: 4
 
 ---

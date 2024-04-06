@@ -1,6 +1,8 @@
 ---
 title: Array
-group: 3_js基础与案例
+group:
+  order: 2
+  title: js基础与案例
 order: 3
 ---
 # Array对象

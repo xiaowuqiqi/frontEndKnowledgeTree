@@ -1,7 +1,9 @@
 ---
 title: ServiceWorker 基础
 order: 1
-group: 6 PWA
+group:
+  order: 6
+  title: PWA
 ---
 
 # ServiceWorker 基础

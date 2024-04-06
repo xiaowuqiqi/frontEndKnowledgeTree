@@ -1,7 +1,9 @@
 ---
 title: workbox 路由与策略
 order: 8
-group: 6 PWA
+group:
+  order: 6
+  title: PWA
 ---
 
 # workbox 路由与策略

@@ -1,7 +1,9 @@
 ---
 title: ServiceWorker API
 order: 1
-group: 6 PWA
+group:
+  order: 6
+  title: PWA
 ---
 
 # ServiceWorker API

@@ -1,6 +1,10 @@
 ---
-title: 2_实例化与原型链
+title: 实例化与原型链
 order: 2
+group:
+  order: 1
+  title: 前端概念与杂项
+nav: JS
 ---
 # 实例化与原型链
 

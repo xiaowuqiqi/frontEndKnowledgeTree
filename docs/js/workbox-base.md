@@ -1,7 +1,9 @@
 ---
 title: workbox 基础
 order: 5
-group: 6 PWA
+group:
+  order: 6
+  title: PWA
 ---
 
 # workbox 基础

@@ -1,6 +1,8 @@
 ---
 title: 回溯算法
-group: 4_算法基础
+group:
+  order: 3
+  title: 算法基础
 order: 4
 ---
 # 回溯算法

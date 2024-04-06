@@ -1,7 +1,9 @@
 ---
 title: workbox 预缓存
 order: 6
-group: 6 PWA
+group:
+  order: 6
+  title: PWA
 ---
 
 # workbox 预缓存

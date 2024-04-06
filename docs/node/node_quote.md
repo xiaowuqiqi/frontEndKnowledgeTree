@@ -101,6 +101,27 @@ stat('.').then((stats) => {
 }); 
 ```
 
+**自己构建异步函数**
+
+自己构建异步函数时，注意的是参数定义 n 个（不包括callback），调用时就要传入 n 个。调用时不能少传入参数，如果需要默认值参数，则需要特殊处理。
+
+```js
+const {promisify} = require('node:util')
+
+const delayFn = promisify((...arg) => {// node 中 arguments 不在是方法参数数组。
+  let callback = arg[arg.length - 1]; // 最后一个参数都会传入 callback。
+  const [time = 2000] = arg.slice(0, -1); // 其他参数，如果没有赋值默认值。
+  setTimeout(() => {
+    callback(null, 'data')
+  }, time)
+})
+delayFn().then((data) => {
+  console.log(data)
+})
+```
+
+
+
 ## node 引用包整理
 
 ### recursive-readdir
