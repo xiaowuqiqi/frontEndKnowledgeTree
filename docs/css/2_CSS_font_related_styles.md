@@ -299,11 +299,11 @@ line-height: normal;
 </div>
 ```
 ![在这里插入图片描述](https://letwz-1258488629.cos.ap-chengdu.myqcloud.com/html/htmlImg/20181010164225122.jpg)
-### vetical-align样式
+### vertical-align样式
 参考教程:
 [CSS深入理解vertical-align和line-height的基友关系](https://www.zhangxinxu.com/wordpress/2015/08/css-deep-understand-vertical-align-and-line-height/)
 
-`vetical-align`的功能是设置行内元素垂直方向上的对齐方式。
+`vertical-align`的功能是设置行内元素垂直方向上的对齐方式。
 ```css
 vertical-align:baseline;
 ```

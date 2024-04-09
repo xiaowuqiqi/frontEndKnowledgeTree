@@ -1017,3 +1017,16 @@ export default withRouter((props) => {
 })
 ```
 
+## 备注
+
+### 为什么 react-sanitized-html 更安全一些
+
+react-sanitized-html 是一个 React 组件，用于在 React 应用中安全地渲染 HTML 内容。它更安全的原因主要有以下几点：
+
+防止 XSS 攻击： XSS（跨站脚本攻击）是一种常见的安全漏洞，攻击者通过在网页中插入恶意脚本来盗取用户信息或者进行其他恶意行为。react-sanitized-html 使用了严格的 HTML 清理和过滤规则，确保渲染的 HTML 内容不包含恶意脚本，从而有效地防止了 XSS 攻击。
+
+过滤危险标签和属性： react-sanitized-html 会自动过滤掉危险的 HTML 标签和属性，比如 <script> 标签和 onclick 属性等，这些标签和属性可能被恶意利用来执行不安全的操作。
+
+可配置的策略： react-sanitized-html 提供了一些配置选项，可以根据项目的需要进行定制。你可以配置允许的标签和属性，以及自定义的过滤规则，从而更好地适应不同的场景和需求。
+
+总的来说，react-sanitized-html 更安全一些，因为它通过严格的 HTML 清理和过滤规则，有效地防止了常见的安全漏洞，保护了用户和应用的安全。
