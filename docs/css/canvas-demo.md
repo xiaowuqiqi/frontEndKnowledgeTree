@@ -1,9 +1,9 @@
 ---
 title: canvas小球碰撞案例
-order: 3 
-nav:
-  order: 8 
-  title: Canvas
+order: 3
+group:
+  title: canvas
+  order: 9
 ---
 
 # canvas小球碰撞案例

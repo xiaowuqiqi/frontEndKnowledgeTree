@@ -157,6 +157,185 @@ template
 
 ## 指令
 
+### v-if
+
+`v-if` 指令用于条件性地渲染一块内容。这块内容只会在指令的表达式返回真值时才被渲染。
+
+```jsx | pure
+<div v-if="type === 'A'">
+  A
+</div>
+<div v-else-if="type === 'B'">
+  B
+</div>
+<div v-else-if="type === 'C'">
+  C
+</div>
+<div v-else>
+  Not A/B/C
+</div>
+```
+
+**`v-if` vs. `v-show`**
+
+`v-if` 是“真实的”按条件渲染，因为它确保了在切换时，条件区块内的事件监听器和子组件都会被销毁与重建。
+
+`v-if` 也是**惰性**的：如果在初次渲染时条件值为 false，则不会做任何事。条件区块只有当条件首次变为 true 时才被渲染。
+
+相比之下，`v-show` 简单许多，元素无论初始条件如何，始终会被渲染，只有 CSS `display` 属性会被切换。
+
+总的来说，`v-if` 有更高的切换开销，而 `v-show` 有更高的初始渲染开销。因此，如果需要频繁切换，则使用 `v-show` 较好；如果在运行时绑定条件很少改变，则 `v-if` 会更合适。
+
+### v-for
+
+使用 `v-for` 指令基于一个数组来渲染一个列表。`v-for` 指令的值需要使用 `item in items` 形式的特殊语法，其中 `items` 是源数据的数组，而 `item` 是迭代项的**别名**：
+
+```js
+const parentMessage = ref('Parent')
+const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
+```
+
+```jsx | pure
+<li v-for="(item, index) in items">
+  {{ parentMessage }} - {{ index }} - {{ item.message }}
+</li>
+```
+
+**`v-for` 与对象**
+
+也可以使用 `v-for` 来遍历一个对象的所有属性。遍历的顺序会基于对该对象调用 `Object.keys()` 的返回值来决定。
+
+```js
+const myObject = reactive({
+  title: 'How to do lists in Vue',
+  author: 'Jane Doe',
+  publishedAt: '2016-04-10'
+})
+```
+
+```jsx | pure
+<ul>
+  <li v-for="value in myObject">
+    {{ value }}
+  </li>
+</ul>
+```
+
+或者
+
+```jsx | pure
+<li v-for="(value, key, index) in myObject">
+  {{ index }}. {{ key }}: {{ value }}
+</li>
+```
+
+**通过key管理状态**
+
+当数据项的顺序改变时，Vue 不会随之移动 DOM 元素的顺序，而是就地更新每个元素，确保它们在原本指定的索引位置上渲染。
+
+默认模式是高效的，但**只适用于列表渲染输出的结果不依赖子组件状态或者临时 DOM 状态 (例如表单输入值) 的情况**。
+
+为了给 Vue 一个提示，以便它可以跟踪每个节点的标识，从而重用和重新排序现有的元素，你需要为每个元素对应的块提供一个唯一的 `key` attribute：
+
+```jsx | pure
+<div v-for="item in items" :key="item.id">
+  <!-- 内容 -->
+</div>
+```
+
+#### 数组变化侦测
+
+Vue 能够侦听响应式数组的变更方法，并在它们被调用时触发相关的更新。这些变更方法包括：
+
+- `push()`
+- `pop()`
+- `shift()`
+- `unshift()`
+- `splice()`
+- `sort()`
+- `reverse()`
+
+**展示过滤或排序后的结果**
+
+```js
+const numbers = ref([1, 2, 3, 4, 5])
+
+const evenNumbers = computed(() => {
+  return numbers.value.filter((n) => n % 2 === 0)
+})
+```
+
+```jsx | pure
+<li v-for="n in evenNumbers">{{ n }}</li>
+```
+
+> 使用 `reverse()` 和 `sort()` 的时候务必小心！这两个方法将变更原始数组，计算函数中不应该这么做。请在调用这些方法之前创建一个原数组的副本：
+>
+> diff
+>
+> ```
+> - return numbers.reverse()
+> + return [...numbers].reverse()
+> ```
+
+### v-model
+
+#### v-model基础使用
+
+`v-model` 可以在组件上使用以实现双向绑定。
+
+```jsx | pure
+<input v-model="searchText" />
+```
+
+等价于
+
+```jsx | pure
+<input
+  :value="searchText"
+  @input="searchText = $event.target.value"
+/>
+```
+
+#### 实现v-model接口
+
+实现v-model接口，子级需要定义 modelValue 属性与update:modelValue 事件。
+
+子级：
+
+```jsx | pure
+<script setup>
+defineProps(['modelValue'])
+defineEmits(['update:modelValue'])
+</script>
+
+<template>
+  <!--@input="$emit('update:modelValue', $event.target.value)"-->
+  <input
+    :value="modelValue"
+    @input="(e)=>$emit('update:modelValue', e.target.value)"
+  />
+</template>
+```
+
+父级：
+
+```jsx | pure
+<script setup>
+import {ref} from 'vue';
+import Childe from './childe.vue';
+const inputData = ref()
+</script>
+<template>
+  <Childe v-model="inputData"/>
+  <div>
+    {{inputData}}
+  </div>
+</template>
+```
+
+
+
 ### v-on
 
 给元素绑定事件监听器。

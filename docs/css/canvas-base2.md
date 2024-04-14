@@ -1,9 +1,9 @@
 ---
 title: canvas基础2
 order: 2
-nav:
-  order: 8
-  title: Canvas
+group:
+  title: canvas
+  order: 9
 ---
 
 # canvas基础2

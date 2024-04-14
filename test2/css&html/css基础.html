@@ -1,0 +1,139 @@
+<html lang="zh">
+<head>
+  <meta charset="utf-8"/>
+  <title>css</title>
+  <link rel="stylesheet" href="./cssBase.css">
+  <style>
+    :root {
+      --divisionWidth: 100
+    }
+
+    div + span {
+      color: blue;
+      /*color:black;*/
+      /*color:yellow;*/
+      /*color:blue;*/
+      /*color:green;*/
+      /*  :link visited hover active focus */
+      /* link visited hover active focus */
+      /* div p:first-child p:first-of-type p:last-child p:last-of-type */
+      /* nth-child nth-of-type */
+    }
+
+    .clearfix::after {
+      content: '';
+      display: block;
+      clear: both;
+      visibility: hidden;
+      height: 0;
+    }
+
+    .clearfix {
+      *zoom: 1
+    }
+
+    .division::before,
+    .division::after {
+      content: '';
+      display: inline-block;
+      width: calc(100vw / 2 - 50px);
+      /* attr() calc() var() */
+      /* vertical-align:middle */
+      /* vertical-align:sub super middle  */
+      /*box-shadow*/
+      /*important selection*/
+      border-top: 1px black solid;
+      margin: 5px;
+      font-famliy: '微软雅黑'
+    }
+
+    .parent {
+      display: table;
+      height: 200px;
+    }
+
+    .child {
+      display: table-cell;
+      text-align: center;
+      vertical-align: center;
+    }
+
+    .parent {
+
+    }
+
+    .child {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%)
+    }
+
+    .parent {
+      display: block;
+      text-align: center;
+    }
+
+    .child::after {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+
+    .child {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .parent{
+      display:flex;
+      text-align:center;
+    }
+    .child{
+      margin:auto
+    }
+    .parent{
+      position:relative;
+    }
+    .child{
+      position:absolute;
+      top:0;
+      left:0;
+      bottom:0;
+      right:0;
+      margin:auto;
+      width: 100px;
+      height:100px;
+    }
+    .background{
+      re
+    }
+  </style>
+</head>
+<body>
+!important #id .class a[href='']{} :hover ::before ::after
+span *{}
+[href^="www"]
+[href$=""]
+[href*='baidu']
+::selection
+::before after first last before after
+::before after
+:link :visited :hover :active :focus calc() var(--main1) content:"("attr()")"
+important
+family
+
+
+vertical-align sub super middle middle
+vertical-align middle;
+
+<div></div>
+<span>1</span>
+<span>2</span>
+<p>qased</p>
+<div class="division">分割线</div>
+</body>
+</html>
